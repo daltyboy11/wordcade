@@ -87,13 +87,15 @@ export default function WhoSaidIt() {
               {timeLeft}
             </h1>
           </div>
-          <h2 className="text-2xl mb-6">"{data[currentQuestion].quote}"</h2>
-          <div className="grid gap-4">
+          <p className="text-xl mb-6 max-w-xl mx-auto h-24 italic">
+            {data[currentQuestion].quote}
+          </p>
+          <div className="flex flex-col items-center gap-4">
             {data[currentQuestion].options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => handleAnswer(index)}
-                className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+                className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800 w-64"
               >
                 {option}
               </button>
@@ -106,20 +108,20 @@ export default function WhoSaidIt() {
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Game Over</h1>
           <p className="text-xl mb-8">Your score: {score}</p>
-          <h2 className="text-2xl mb-4">Your Answers:</h2>
+          <h2 className="text-2xl mb-4 text-left">Your Answers:</h2>
           <ul className="list-disc list-inside text-left">
             {answers.map((answer, index) => {
               const question = data[index];
               const isCorrect = answer === question.answer;
               return (
-                <li key={index} className="mb-2">
-                  "{question.quote}":{' '}
+                <li key={index} className="mb-2 italic">
+                  {question.quote}{' '}
                   {isCorrect ? (
-                    <span className="text-green-500">
+                    <span className="text-green-500 not-italic">
                       ✅ {question.options[answer]}
                     </span>
                   ) : (
-                    <span className="text-orange-300">
+                    <span className="text-orange-300 not-italic">
                       ❌ {question.options[answer]} (Correct:{' '}
                       {question.options[question.answer]})
                     </span>
