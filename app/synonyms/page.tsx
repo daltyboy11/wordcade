@@ -2,23 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import sampleData from '../../lib/synonyms/example.json';
 
-const data = [
-  { word: 'ubiquitous', options: ['rare', 'omnipresent', 'unseen'], answer: 1 },
-  { word: 'benevolent', options: ['kind', 'cruel', 'indifferent'], answer: 0 },
-  { word: 'candid', options: ['secretive', 'honest', 'deceptive'], answer: 1 },
-  { word: 'diligent', options: ['lazy', 'hardworking', 'careless'], answer: 1 },
-  { word: 'ephemeral', options: ['lasting', 'brief', 'eternal'], answer: 1 },
-  { word: 'gregarious', options: ['shy', 'sociable', 'reserved'], answer: 1 },
-  { word: 'lucid', options: ['confusing', 'clear', 'obscure'], answer: 1 },
-  { word: 'meticulous', options: ['careless', 'thorough', 'hasty'], answer: 1 },
-  { word: 'novel', options: ['common', 'new', 'old'], answer: 1 },
-  {
-    word: 'pragmatic',
-    options: ['idealistic', 'practical', 'theoretical'],
-    answer: 1,
-  },
-];
+type Synonym = {
+  word: string;
+  options: string[];
+  answer: number;
+};
 
 export default function Synonyms() {
   const router = useRouter();
@@ -27,6 +17,14 @@ export default function Synonyms() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(3);
   const [answers, setAnswers] = useState<number[]>([]);
+  const [data, setData] = useState<Synonym[]>([]);
+
+  useEffect(() => {
+    // TODO - fetch data from Claude
+    if (data.length === 0) {
+      setData(sampleData);
+    }
+  }, []);
 
   useEffect(() => {
     if (pageState === 'ingame' && timeLeft > 0) {
