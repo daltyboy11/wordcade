@@ -2,20 +2,16 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import sampleData from '../../lib/analogies/example.json';
 
-const data = [
-  {
-    prompt: { A: 'Leaf', B: 'Tree' },
-    options: [
-      { optionText: 'Petal => Flower', isCorrect: true },
-      { optionText: 'Book => Library', isCorrect: false },
-      { optionText: 'Fur => Dog', isCorrect: false },
-      { optionText: 'Star => Sky', isCorrect: false },
-    ],
-    explanation:
-      "The relationship between 'Leaf' and 'Tree' is that a leaf is a part of a tree. Similarly, a 'Petal' is a part of a 'Flower'. Both relationships are of a part to the whole.",
-  },
-];
+type Analogy = {
+  prompt: {
+    A: string;
+    B: string;
+  };
+  options: { optionText: string; isCorrect: boolean }[];
+  explanation: string;
+};
 
 export default function Analogies() {
   const router = useRouter();
@@ -24,6 +20,14 @@ export default function Analogies() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [answers, setAnswers] = useState<boolean[]>([]);
+  const [data, setData] = useState<Analogy[]>([]);
+
+  useEffect(() => {
+    // TODO - fetch data from Claude
+    if (data.length === 0) {
+      setData(sampleData);
+    }
+  }, []);
 
   useEffect(() => {
     if (pageState === 'ingame' && timeLeft > 0) {
@@ -89,7 +93,7 @@ export default function Analogies() {
             </h1>
           </div>
           <h2 className="text-2xl mb-6">
-            ${data[currentQuestion].prompt.A} ={'>'} $
+            {data[currentQuestion].prompt.A} ={'>'}
             {data[currentQuestion].prompt.B}
           </h2>
           <div className="grid gap-4">
