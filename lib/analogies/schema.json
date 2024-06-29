@@ -1,0 +1,25 @@
+{
+  "prompt": {
+    "A": "Leaf",
+    "B": "Tree"
+  },
+  "options": [
+    {
+      "optionText": "Petal => Flower",
+      "isCorrect": true
+    },
+    {
+      "optionText": "Book => Library",
+      "isCorrect": false
+    },
+    {
+      "optionText": "Fur => Dog",
+      "isCorrect": false
+    },
+    {
+      "optionText": "Star => Sky",
+      "isCorrect": false
+    }
+  ],
+  "explanation": "The relationship between 'Leaf' and 'Tree' is that a leaf is a part of a tree. Similarly, a 'Petal' is a part of a 'Flower'. Both relationships are of a part to the whole."
+}

@@ -1,0 +1,127 @@
+[
+  {
+    "prompt": {
+      "A": "Leaf",
+      "B": "Tree"
+    },
+    "options": [
+      {
+        "optionText": "Petal => Flower",
+        "isCorrect": true
+      },
+      {
+        "optionText": "Book => Library",
+        "isCorrect": false
+      },
+      {
+        "optionText": "Fur => Dog",
+        "isCorrect": false
+      },
+      {
+        "optionText": "Star => Sky",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The relationship between 'Leaf' and 'Tree' is that a leaf is a part of a tree. Similarly, a 'Petal' is a part of a 'Flower'. Both relationships are of a part to the whole."
+  },
+  {
+    "prompt": {
+      "A": "Artist",
+      "B": "Paintbrush"
+    },
+    "options": [
+      {
+        "optionText": "Writer => Pen",
+        "isCorrect": true
+      },
+      {
+        "optionText": "Driver => Car",
+        "isCorrect": false
+      },
+      {
+        "optionText": "Chef => Knife",
+        "isCorrect": false
+      },
+      {
+        "optionText": "Teacher => Blackboard",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The relationship between 'Artist' and 'Paintbrush' is that a paintbrush is a tool used by an artist to create art. Similarly, a 'Pen' is a tool used by a 'Writer' to create written works. Both pairs share a user-to-tool relationship."
+  },
+  {
+    "prompt": {
+      "A": "Captain",
+      "B": "Ship"
+    },
+    "options": [
+      {
+        "optionText": "Pilot => Airplane",
+        "isCorrect": true
+      },
+      {
+        "optionText": "Doctor => Hospital",
+        "isCorrect": false
+      },
+      {
+        "optionText": "Teacher => Student",
+        "isCorrect": false
+      },
+      {
+        "optionText": "Author => Book",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The relationship between 'Captain' and 'Ship' is that a captain commands a ship. Similarly, a 'Pilot' commands an 'Airplane'. Both pairs share a commander-to-vehicle relationship."
+  },
+  {
+    "prompt": {
+      "A": "Key",
+      "B": "Lock"
+    },
+    "options": [
+      {
+        "optionText": "Code => Safe",
+        "isCorrect": true
+      },
+      {
+        "optionText": "Switch => Light",
+        "isCorrect": false
+      },
+      {
+        "optionText": "Button => Shirt",
+        "isCorrect": false
+      },
+      {
+        "optionText": "Hammer => Nail",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The relationship between 'Key' and 'Lock' is that a key is used to unlock a lock. Similarly, a 'Code' is used to unlock a 'Safe'. Both pairs share an unlocker-to-locked object relationship."
+  },
+  {
+    "prompt": {
+      "A": "Butterfly",
+      "B": "Caterpillar"
+    },
+    "options": [
+      {
+        "optionText": "Frog => Tadpole",
+        "isCorrect": true
+      },
+      {
+        "optionText": "Chicken => Egg",
+        "isCorrect": false
+      },
+      {
+        "optionText": "Flower => Seed",
+        "isCorrect": false
+      },
+      {
+        "optionText": "Tree => Leaf",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The relationship between 'Butterfly' and 'Caterpillar' is that a butterfly is the adult form of a caterpillar. Similarly, a 'Frog' is the adult form of a 'Tadpole'. Both pairs share a lifecycle stage relationship."
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "word": "ubiquitous",
+    "options": ["rare", "omnipresent", "unseen"],
+    "answer": 1
+  },
+  {
+    "word": "pulchritudinous",
+    "options": ["ugly", "beautiful", "ordinary"],
+    "answer": 1
+  },
+  {
+    "word": "pernicious",
+    "options": ["harmless", "beneficial", "harmful"],
+    "answer": 2
+  },
+  {
+    "word": "lachrymose",
+    "options": ["joyful", "tearful", "indifferent"],
+    "answer": 1
+  },
+  {
+    "word": "loquacious",
+    "options": ["silent", "talkative", "reserved"],
+    "answer": 1
+  },
+  {
+    "word": "mellifluous",
+    "options": ["harsh", "sweet-sounding", "discordant"],
+    "answer": 1
+  },
+  {
+    "word": "abstruse",
+    "options": ["clear", "obscure", "simple"],
+    "answer": 1
+  },
+  {
+    "word": "sagacious",
+    "options": ["foolish", "wise", "ignorant"],
+    "answer": 1
+  },
+  {
+    "word": "capricious",
+    "options": ["predictable", "steady", "unpredictable"],
+    "answer": 2
+  },
+  {
+    "word": "ineffable",
+    "options": ["expressible", "unutterable", "ordinary"],
+    "answer": 1
+  }
+]
