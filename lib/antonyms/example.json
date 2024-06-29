@@ -1,0 +1,52 @@
+[
+  {
+    "word": "abundant",
+    "options": ["plentiful", "sparse", "copious"],
+    "answer": 1
+  },
+  {
+    "word": "reluctant",
+    "options": ["eager", "hesitant", "unwilling"],
+    "answer": 0
+  },
+  {
+    "word": "fortify",
+    "options": ["strengthen", "weaken", "bolster"],
+    "answer": 1
+  },
+  {
+    "word": "tranquil",
+    "options": ["chaotic", "peaceful", "serene"],
+    "answer": 0
+  },
+  {
+    "word": "vivid",
+    "options": ["dull", "lively", "bright"],
+    "answer": 0
+  },
+  {
+    "word": "benevolent",
+    "options": ["malicious", "kind", "charitable"],
+    "answer": 0
+  },
+  {
+    "word": "arduous",
+    "options": ["easy", "difficult", "strenuous"],
+    "answer": 0
+  },
+  {
+    "word": "lucid",
+    "options": ["clear", "opaque", "transparent"],
+    "answer": 1
+  },
+  {
+    "word": "candid",
+    "options": ["deceitful", "honest", "straightforward"],
+    "answer": 0
+  },
+  {
+    "word": "ephemeral",
+    "options": ["lasting", "fleeting", "brief"],
+    "answer": 0
+  }
+]
