@@ -4,29 +4,25 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const data = [
-  { word: 'ubiquitous', options: ['rare', 'omnipresent', 'unseen'], answer: 1 },
-  { word: 'benevolent', options: ['kind', 'cruel', 'indifferent'], answer: 0 },
-  { word: 'candid', options: ['secretive', 'honest', 'deceptive'], answer: 1 },
-  { word: 'diligent', options: ['lazy', 'hardworking', 'careless'], answer: 1 },
-  { word: 'ephemeral', options: ['lasting', 'brief', 'eternal'], answer: 1 },
-  { word: 'gregarious', options: ['shy', 'sociable', 'reserved'], answer: 1 },
-  { word: 'lucid', options: ['confusing', 'clear', 'obscure'], answer: 1 },
-  { word: 'meticulous', options: ['careless', 'thorough', 'hasty'], answer: 1 },
-  { word: 'novel', options: ['common', 'new', 'old'], answer: 1 },
-  {
-    word: 'pragmatic',
-    options: ['idealistic', 'practical', 'theoretical'],
-    answer: 1,
-  },
+  { word: 'blateration', definition: 'the act of incessantly babbling or chattering', real: true },
+  { word: 'quizzacious', definition: 'full of questions; inquisitive', real: false },
+  { word: 'flibbertigibbet', definition: 'a frivolous, flighty, or excessively talkative person', real: true },
+  { word: 'snollygoster', definition: 'a shrewd, unprincipled person, especially a politician', real: true },
+  { word: 'gobbledygook', definition: 'language that is meaningless or hard to understand; nonsense', real: true },
+  { word: 'widdershins', definition: 'in a direction contrary to the sun\'s course; counterclockwise', real: true },
+  { word: 'mugwump', definition: 'a person who remains aloof or independent, especially from party politics', real: true },
+  { word: 'absquatulate', definition: 'to leave abruptly; to decamp', real: true },
+  { word: 'rambunctious', definition: 'uncontrollably exuberant; boisterous', real: true },
+  { word: 'fudgel', definition: 'pretending to work when you\'re not actually doing anything at all', real: false },
 ];
 
-export default function Synonyms() {
-  const router = useRouter()
+export default function FakeWords() {
+  const router = useRouter();
   const [pageState, setPageState] = useState('pregame');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(3);
-  const [answers, setAnswers] = useState<number[]>([]);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [answers, setAnswers] = useState<boolean[]>([]);
 
   useEffect(() => {
     if (pageState === 'ingame' && timeLeft > 0) {
@@ -41,13 +37,13 @@ export default function Synonyms() {
     setPageState('ingame');
     setCurrentQuestion(0);
     setScore(0);
-    setTimeLeft(3);
+    setTimeLeft(30);
     setAnswers([]);
   };
 
-  const handleAnswer = (index: number) => {
-    setAnswers([...answers, index]);
-    if (index === data[currentQuestion].answer) {
+  const handleAnswer = (isReal: boolean) => {
+    setAnswers([...answers, isReal]);
+    if (isReal === data[currentQuestion].real) {
       setScore(score + 1);
     } else {
       setScore(score - 1);
@@ -69,10 +65,9 @@ export default function Synonyms() {
       </button>
       {pageState === 'pregame' && (
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Synonyms Game</h1>
+          <h1 className="text-4xl font-bold mb-4">Fake Words Game</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Choose the correct synonym for each word. You have 30 seconds to
-            answer as many as you can.
+             Determine if the word and its definition are real or fake. You have 30 seconds to answer as many as you can.
           </p>
           <button
             onClick={handleStartGame}
@@ -91,16 +86,20 @@ export default function Synonyms() {
             </h1>
           </div>
           <h2 className="text-2xl mb-6">{data[currentQuestion].word}</h2>
+          <p className="text-xl mb-6">{data[currentQuestion].definition}</p>
           <div className="grid gap-4">
-            {data[currentQuestion].options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswer(index)}
-                className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
-              >
-                {option}
-              </button>
-            ))}
+            <button
+              onClick={() => handleAnswer(true)}
+              className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+            >
+              Real
+            </button>
+            <button
+              onClick={() => handleAnswer(false)}
+              className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+            >
+              Fake
+            </button>
           </div>
         </div>
       )}
@@ -113,18 +112,14 @@ export default function Synonyms() {
           <ul className="list-disc list-inside text-left">
             {answers.map((answer, index) => {
               const question = data[index];
-              const isCorrect = answer === question.answer;
+              const isCorrect = answer === question.real;
               return (
                 <li key={index} className="mb-2">
-                  {question.word}:{' '}
-                  {isCorrect ? (
-                    <span className="text-green-500">
-                      ✅ {question.options[answer]}
-                    </span>
+                  {question.word}: {isCorrect ? (
+                    <span className="text-green-500">✅ {question.real ? 'Real' : 'Fake'}</span>
                   ) : (
-                    <span className="text-orange-300">
-                      ❌ {question.options[answer]} (Correct:{' '}
-                      {question.options[question.answer]})
+                    <span className="text-orange-700">
+                      ❌ {answer ? 'Real' : 'Fake'} (Correct: {question.real ? 'Real' : 'Fake'})
                     </span>
                   )}
                 </li>
