@@ -23,6 +23,16 @@ const games = [
     title: 'Analogies',
     description: 'Solve the analogy and score points!',
   },
+  {
+    href: '/word-scramble',
+    title: 'Word Scramble',
+    description: 'Unscramble the word!',
+  },
+  {
+    href: '/who-said-it',
+    title: 'Who Said It?',
+    description: 'Identify the quote author!',
+  },
 ];
 
 export default function Home() {
