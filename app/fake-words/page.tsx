@@ -85,17 +85,19 @@ export default function FakeWords() {
             </h1>
           </div>
           <h2 className="text-2xl mb-6">{data[currentQuestion].word}</h2>
-          <p className="text-xl mb-6">{data[currentQuestion].definition}</p>
-          <div className="grid gap-4">
+          <p className="text-xl mb-6 max-w-xl mx-auto h-24">
+            {data[currentQuestion].definition}
+          </p>
+          <div className="flex justify-center gap-4">
             <button
               onClick={() => handleAnswer(true)}
-              className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+              className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800 w-32"
             >
               Real
             </button>
             <button
               onClick={() => handleAnswer(false)}
-              className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+              className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800 w-32"
             >
               Fake
             </button>
