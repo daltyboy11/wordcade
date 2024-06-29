@@ -4,16 +4,58 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const data = [
-  { word: 'blateration', definition: 'the act of incessantly babbling or chattering', real: true },
-  { word: 'quizzacious', definition: 'full of questions; inquisitive', real: false },
-  { word: 'flibbertigibbet', definition: 'a frivolous, flighty, or excessively talkative person', real: true },
-  { word: 'snollygoster', definition: 'a shrewd, unprincipled person, especially a politician', real: true },
-  { word: 'gobbledygook', definition: 'language that is meaningless or hard to understand; nonsense', real: true },
-  { word: 'widdershins', definition: 'in a direction contrary to the sun\'s course; counterclockwise', real: true },
-  { word: 'mugwump', definition: 'a person who remains aloof or independent, especially from party politics', real: true },
-  { word: 'absquatulate', definition: 'to leave abruptly; to decamp', real: true },
-  { word: 'rambunctious', definition: 'uncontrollably exuberant; boisterous', real: true },
-  { word: 'fudgel', definition: 'pretending to work when you\'re not actually doing anything at all', real: false },
+  {
+    word: 'blateration',
+    definition: 'the act of incessantly babbling or chattering',
+    real: true,
+  },
+  {
+    word: 'quizzacious',
+    definition: 'full of questions; inquisitive',
+    real: false,
+  },
+  {
+    word: 'flibbertigibbet',
+    definition: 'a frivolous, flighty, or excessively talkative person',
+    real: true,
+  },
+  {
+    word: 'snollygoster',
+    definition: 'a shrewd, unprincipled person, especially a politician',
+    real: true,
+  },
+  {
+    word: 'gobbledygook',
+    definition: 'language that is meaningless or hard to understand; nonsense',
+    real: true,
+  },
+  {
+    word: 'widdershins',
+    definition: "in a direction contrary to the sun's course; counterclockwise",
+    real: true,
+  },
+  {
+    word: 'mugwump',
+    definition:
+      'a person who remains aloof or independent, especially from party politics',
+    real: true,
+  },
+  {
+    word: 'absquatulate',
+    definition: 'to leave abruptly; to decamp',
+    real: true,
+  },
+  {
+    word: 'rambunctious',
+    definition: 'uncontrollably exuberant; boisterous',
+    real: true,
+  },
+  {
+    word: 'fudgel',
+    definition:
+      "pretending to work when you're not actually doing anything at all",
+    real: false,
+  },
 ];
 
 export default function FakeWords() {
@@ -67,7 +109,8 @@ export default function FakeWords() {
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Fake Words Game</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-             Determine if the word and its definition are real or fake. You have 30 seconds to answer as many as you can.
+            Determine if the word and its definition are real or fake. You have
+            30 seconds to answer as many as you can.
           </p>
           <button
             onClick={handleStartGame}
@@ -115,11 +158,15 @@ export default function FakeWords() {
               const isCorrect = answer === question.real;
               return (
                 <li key={index} className="mb-2">
-                  {question.word}: {isCorrect ? (
-                    <span className="text-green-500">✅ {question.real ? 'Real' : 'Fake'}</span>
+                  {question.word}:{' '}
+                  {isCorrect ? (
+                    <span className="text-green-500">
+                      ✅ {question.real ? 'Real' : 'Fake'}
+                    </span>
                   ) : (
                     <span className="text-orange-700">
-                      ❌ {answer ? 'Real' : 'Fake'} (Correct: {question.real ? 'Real' : 'Fake'})
+                      ❌ {answer ? 'Real' : 'Fake'} (Correct:{' '}
+                      {question.real ? 'Real' : 'Fake'})
                     </span>
                   )}
                 </li>

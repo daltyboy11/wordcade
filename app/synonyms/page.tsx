@@ -21,7 +21,7 @@ const data = [
 ];
 
 export default function Synonyms() {
-  const router = useRouter()
+  const router = useRouter();
   const [pageState, setPageState] = useState('pregame');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
