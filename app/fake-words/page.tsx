@@ -65,8 +65,9 @@ export default function FakeWords() {
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Fake Words Game</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Determine if the word and its definition are real or fake. You have
-            30 seconds to answer as many as you can.
+            Determine if the word and its definition are real or fake. A correct
+            answer is +1 point. A wrong answer is -1 point. You have 30 seconds
+            to answer as many as you can.
           </p>
           <button
             onClick={handleStartGame}
@@ -109,7 +110,7 @@ export default function FakeWords() {
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Game Over</h1>
           <p className="text-xl mb-8">Your score: {score}</p>
-          <h2 className="text-2xl mb-4">Your Answers:</h2>
+          <h2 className="text-2xl mb-4 text-left">Your Answers:</h2>
           <ul className="list-disc list-inside text-left">
             {answers.map((answer, index) => {
               const question = data[index];
