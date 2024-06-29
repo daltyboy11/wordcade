@@ -2,61 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import sampleData from '../../lib/fake-words/example.json';
 
-const data = [
-  {
-    word: 'blateration',
-    definition: 'the act of incessantly babbling or chattering',
-    real: true,
-  },
-  {
-    word: 'quizzacious',
-    definition: 'full of questions; inquisitive',
-    real: false,
-  },
-  {
-    word: 'flibbertigibbet',
-    definition: 'a frivolous, flighty, or excessively talkative person',
-    real: true,
-  },
-  {
-    word: 'snollygoster',
-    definition: 'a shrewd, unprincipled person, especially a politician',
-    real: true,
-  },
-  {
-    word: 'gobbledygook',
-    definition: 'language that is meaningless or hard to understand; nonsense',
-    real: true,
-  },
-  {
-    word: 'widdershins',
-    definition: "in a direction contrary to the sun's course; counterclockwise",
-    real: true,
-  },
-  {
-    word: 'mugwump',
-    definition:
-      'a person who remains aloof or independent, especially from party politics',
-    real: true,
-  },
-  {
-    word: 'absquatulate',
-    definition: 'to leave abruptly; to decamp',
-    real: true,
-  },
-  {
-    word: 'rambunctious',
-    definition: 'uncontrollably exuberant; boisterous',
-    real: true,
-  },
-  {
-    word: 'fudgel',
-    definition:
-      "pretending to work when you're not actually doing anything at all",
-    real: false,
-  },
-];
+type FakeWord = { word: string; definition: string; real: boolean };
 
 export default function FakeWords() {
   const router = useRouter();
@@ -65,6 +13,14 @@ export default function FakeWords() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [answers, setAnswers] = useState<boolean[]>([]);
+  const [data, setData] = useState<FakeWord[]>([]);
+
+  useEffect(() => {
+    // TODO - fetch data from Claude
+    if (data.length === 0) {
+      setData(sampleData);
+    }
+  }, []);
 
   useEffect(() => {
     if (pageState === 'ingame' && timeLeft > 0) {
