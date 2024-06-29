@@ -96,7 +96,7 @@ export default function WordScramble() {
             onClick={handleStartGame}
             className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
           >
-            Start Game
+            Start
           </button>
         </div>
       )}
