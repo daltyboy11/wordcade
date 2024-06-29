@@ -70,7 +70,7 @@ export default function Synonyms() {
           <h1 className="text-4xl font-bold mb-4">Synonyms Game</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
             Choose the correct synonym for each word. A correct answer is +1
-            point. An wrong answer is -1 point. You have 30 seconds to answer as
+            point. A wrong answer is -1 point. You have 30 seconds to answer as
             many as you can.
           </p>
           <button

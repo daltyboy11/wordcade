@@ -69,8 +69,9 @@ export default function Antonyms() {
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Antonyms Game</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Choose the correct antonym for each word. You have 30 seconds to
-            answer as many as you can.
+            Choose the correct antonym for each word. A correct answer is +1
+            point. A wrong answer is -1 point. You have 30 seconds to answer as
+            many as you can.
           </p>
           <button
             onClick={handleStartGame}
@@ -107,7 +108,7 @@ export default function Antonyms() {
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Game Over</h1>
           <p className="text-xl mb-8">Your score: {score}</p>
-          <h2 className="text-2xl mb-4">Your Answers:</h2>
+          <h2 className="text-2xl mb-4 text-left">Your Answers:</h2>
           <ul className="list-disc list-inside text-left">
             {answers.map((answer, index) => {
               const question = data[index];
