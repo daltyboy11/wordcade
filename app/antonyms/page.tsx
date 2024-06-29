@@ -75,6 +75,7 @@ export default function Antonyms() {
           </p>
           <button
             onClick={handleStartGame}
+            style={{ minWidth: '200px' }}
             className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
           >
             Start
