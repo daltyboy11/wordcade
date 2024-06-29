@@ -59,7 +59,7 @@ export default function WordScramble() {
     setPageState('ingame');
     setCurrentQuestion(0);
     setSelectedTiles([]);
-    setTimeLeft(30); // Reset the timer to 30 seconds
+    setTimeLeft(300); // Reset the timer to 30 seconds
   };
 
   const handleSlotClick = (index: number) => {
@@ -103,11 +103,9 @@ export default function WordScramble() {
       )}
 
       {pageState === 'ingame' && (
-        <div className="text-center" style={{ minWidth: '300px' }}>
+        <div className="text-center">
           <div className="mb-4">
-            <h1 className="text-4xl font-bold" style={{ minWidth: '200px' }}>
-              {timeLeft} {/* Display the remaining time */}
-            </h1>
+            <h1 className="text-4xl font-bold">{timeLeft}</h1>
           </div>
           <div className="flex justify-center mb-6">
             {Array(data[currentQuestion].word.length)
@@ -122,7 +120,7 @@ export default function WordScramble() {
                 </div>
               ))}
           </div>
-          <div className="grid gap-4 grid-cols-6">
+          <div className="flex gap-4 grid-cols-6">
             {scrambledTiles.map((tile, index) => (
               <button
                 key={index}
