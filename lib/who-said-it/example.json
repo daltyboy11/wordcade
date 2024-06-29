@@ -1,0 +1,56 @@
+[
+  {
+    "quote": "The only thing we have to fear is fear itself.",
+    "options": [
+      "Franklin D. Roosevelt",
+      "Winston Churchill",
+      "John F. Kennedy"
+    ],
+    "answer": 0
+  },
+  {
+    "quote": "I think, therefore I am.",
+    "options": ["Socrates", "René Descartes", "Aristotle"],
+    "answer": 1
+  },
+  {
+    "quote": "In the end, we will remember not the words of our enemies, but the silence of our friends.",
+    "options": ["Nelson Mandela", "Martin Luther King Jr.", "Mahatma Gandhi"],
+    "answer": 1
+  },
+  {
+    "quote": "The only limit to our realization of tomorrow is our doubts of today.",
+    "options": ["Walt Disney", "Albert Einstein", "Franklin D. Roosevelt"],
+    "answer": 2
+  },
+  {
+    "quote": "That which does not kill us makes us stronger.",
+    "options": ["Friedrich Nietzsche", "Sigmund Freud", "Carl Jung"],
+    "answer": 0
+  },
+  {
+    "quote": "To be, or not to be, that is the question.",
+    "options": ["Christopher Marlowe", "William Shakespeare", "John Milton"],
+    "answer": 1
+  },
+  {
+    "quote": "The journey of a thousand miles begins with one step.",
+    "options": ["Lao Tzu", "Confucius", "Sun Tzu"],
+    "answer": 0
+  },
+  {
+    "quote": "The only way to do great work is to love what you do.",
+    "options": ["Steve Jobs", "Bill Gates", "Mark Zuckerberg"],
+    "answer": 0
+  },
+  {
+    "quote": "Float like a butterfly, sting like a bee.",
+    "options": ["Muhammad Ali", "Mike Tyson", "Joe Frazier"],
+    "answer": 0
+  },
+  {
+    "quote": "Not all those who wander are lost.",
+    "options": ["J.R.R. Tolkien", "George R.R. Martin", "C.S. Lewis"],
+    "answer": 0
+  }
+]
