@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const data = [
@@ -20,6 +21,7 @@ const data = [
 ];
 
 export default function Synonyms() {
+  const router = useRouter()
   const [pageState, setPageState] = useState('pregame');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -59,6 +61,12 @@ export default function Synonyms() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+      <button
+        onClick={() => router.push('/')}
+        className="absolute top-4 left-4 px-4 py-2 bg-purple-700 rounded-lg hover:bg-purple-800"
+      >
+        Back to Arcade
+      </button>
       {pageState === 'pregame' && (
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Synonyms Game</h1>
