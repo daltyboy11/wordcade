@@ -50,7 +50,7 @@ export default function WordScramble() {
     if (pageState === 'ingame' && timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (timeLeft === 0) {
+    } else if (pageState === 'ingame' && timeLeft === 0) {
       setPageState('postgame');
     }
   }, [pageState, timeLeft]);
