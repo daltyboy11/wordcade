@@ -191,7 +191,7 @@ Generate an array of 12 questions for the who-said-it minigame. Your response sh
 Elements in the array conform to this schema
 \`\`\`
 {
-  word: string;
+  quote: string;
   options: string[];
   answer: number;
 }
@@ -201,7 +201,7 @@ The options array should have three options, only one of which is the real quote
 An example
 \`\`\`
 {
-  "word": "I think, therefore I am.",
+  "quote": "I think, therefore I am.",
   "options": ["Socrates", "René Descartes", "Aristotle"],
   "answer": 1
 }
