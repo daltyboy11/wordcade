@@ -3,12 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import sampleData from '../../lib/who-said-it/example.json';
-
-type Quote = {
-  quote: string;
-  options: string[];
-  answer: number;
-};
+import { WhoSaidItQuestion } from '@/lib/who-said-it';
 
 export default function WhoSaidIt() {
   const router = useRouter();
@@ -17,7 +12,7 @@ export default function WhoSaidIt() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [answers, setAnswers] = useState<number[]>([]);
-  const [data, setData] = useState<Quote[]>([]);
+  const [data, setData] = useState<WhoSaidItQuestion[]>([]);
 
   useEffect(() => {
     if (data.length === 0) {

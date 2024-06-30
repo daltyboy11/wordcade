@@ -3,12 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import sampleData from '../../lib/synonyms/example.json';
-
-type Synonym = {
-  word: string;
-  options: string[];
-  answer: number;
-};
+import { SynonymQuestion } from '@/lib/synonyms';
 
 export default function Synonyms() {
   const router = useRouter();
@@ -17,7 +12,7 @@ export default function Synonyms() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(3);
   const [answers, setAnswers] = useState<number[]>([]);
-  const [data, setData] = useState<Synonym[]>([]);
+  const [data, setData] = useState<SynonymQuestion[]>([]);
 
   useEffect(() => {
     // TODO - fetch data from Claude

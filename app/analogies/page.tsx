@@ -3,15 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import sampleData from '../../lib/analogies/example.json';
-
-type Analogy = {
-  prompt: {
-    A: string;
-    B: string;
-  };
-  options: { optionText: string; isCorrect: boolean }[];
-  explanation: string;
-};
+import { AnalogyQuestion } from '@/lib/analogies';
 
 export default function Analogies() {
   const router = useRouter();
@@ -20,7 +12,7 @@ export default function Analogies() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [answers, setAnswers] = useState<boolean[]>([]);
-  const [data, setData] = useState<Analogy[]>([]);
+  const [data, setData] = useState<AnalogyQuestion[]>([]);
 
   useEffect(() => {
     // TODO - fetch data from Claude

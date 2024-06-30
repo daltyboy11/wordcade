@@ -3,12 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import sampleData from '../../lib/antonyms/example.json';
-
-type Antonym = {
-  word: string;
-  options: string[];
-  answer: number;
-};
+import { AntonymQuestion } from '@/lib/antonyms';
 
 export default function Antonyms() {
   const router = useRouter();
@@ -17,7 +12,7 @@ export default function Antonyms() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [answers, setAnswers] = useState<number[]>([]);
-  const [data, setData] = useState<Antonym[]>([]);
+  const [data, setData] = useState<AntonymQuestion[]>([]);
 
   useEffect(() => {
     // TODO - fetch data from Claude

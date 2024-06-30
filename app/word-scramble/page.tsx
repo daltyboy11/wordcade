@@ -3,11 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import sampleData from '../../lib/word-scramble/example.json';
-
-type WordScramble = {
-  word: string;
-  scrambled: string;
-};
+import { WordScrambleQuestion } from '@/lib/word-scramble';
 
 export default function WordScramble() {
   const router = useRouter();
@@ -15,7 +11,7 @@ export default function WordScramble() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedTiles, setSelectedTiles] = useState<string[]>([]);
   const [scrambledTiles, setScrambledTiles] = useState<string[]>([]);
-  const [data, setData] = useState<WordScramble[]>([]);
+  const [data, setData] = useState<WordScrambleQuestion[]>([]);
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {

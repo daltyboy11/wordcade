@@ -3,8 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import sampleData from '../../lib/fake-words/example.json';
-
-type FakeWord = { word: string; definition: string; real: boolean };
+import { FakeWordQuestion } from '@/lib/fake-words';
 
 export default function FakeWords() {
   const router = useRouter();
@@ -13,7 +12,7 @@ export default function FakeWords() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [answers, setAnswers] = useState<boolean[]>([]);
-  const [data, setData] = useState<FakeWord[]>([]);
+  const [data, setData] = useState<FakeWordQuestion[]>([]);
 
   useEffect(() => {
     // TODO - fetch data from Claude
