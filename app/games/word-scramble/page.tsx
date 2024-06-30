@@ -127,11 +127,11 @@ export default function WordScramble() {
                     {question.scrambled}{' '}
                     {isCorrect ? (
                       <span className="text-green-500 not-italic">
-                        ✅ {rawAnswer}
+                        <b>+1</b> {rawAnswer}
                       </span>
                     ) : (
                       <span className="text-orange-300 not-italic">
-                        ❌ {rawAnswer} (Correct: {correctAnswer})
+                        <b>-1</b> {rawAnswer} (Correct: {correctAnswer})
                       </span>
                     )}
                   </li>

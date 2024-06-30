@@ -84,11 +84,11 @@ export default function WhoSaidIt() {
                     {question.quote}{' '}
                     {isCorrect ? (
                       <span className="text-green-500 not-italic">
-                        ✅ {answer}
+                        <b>+1</b> {answer}
                       </span>
                     ) : (
                       <span className="text-orange-300 not-italic">
-                        ❌ {answer} (Correct: {correctAnswer})
+                        <b>-1</b> {answer} (Correct: {correctAnswer})
                       </span>
                     )}
                   </li>

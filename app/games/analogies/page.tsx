@@ -52,7 +52,7 @@ export default function Analogies() {
             </h1>
           </div>
           <h2 className="text-2xl mb-6">
-            {data[currentQuestion].prompt.A} ={'>'}
+            {data[currentQuestion].prompt.A} ={'> '}
             {data[currentQuestion].prompt.B}
           </h2>
           <div className="grid gap-4">
@@ -87,10 +87,12 @@ export default function Analogies() {
                   <li key={index} className="mb-2">
                     {question.prompt.A} ={'>'} {question.prompt.B}:{' '}
                     {isCorrect ? (
-                      <span className="text-green-500">✅ {answerText}</span>
+                      <span className="text-green-500">
+                        <b>+1</b> {answerText}
+                      </span>
                     ) : (
-                      <span className="text-orange-700">
-                        ❌ {answerText} (Correct: {correctAnswerText})
+                      <span className="text-orange-300">
+                        <b>-1</b> {answerText} (Correct: {correctAnswerText})
                       </span>
                     )}
                   </li>
