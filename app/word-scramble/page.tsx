@@ -129,10 +129,28 @@ export default function WordScramble() {
         data && (
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Game Over</h1>
-            <p className="text-xl mb-8">
-              Your score:{' '}
-              {selectedTiles.join('') === data[currentQuestion].word ? 1 : 0}
-            </p>
+            <p className="text-xl mb-8">Your score: {score}</p>
+            <h2 className="text-2xl mb-4 text-left">Your Answers:</h2>
+            <ul className="list-disc list-inside text-left">
+              {answers.map(({ isCorrect, rawAnswer }, index) => {
+                const question = data[index];
+                const correctAnswer = question.word;
+                return (
+                  <li key={index} className="mb-2 italic">
+                    {question.scrambled}{' '}
+                    {isCorrect ? (
+                      <span className="text-green-500 not-italic">
+                        ✅ {rawAnswer}
+                      </span>
+                    ) : (
+                      <span className="text-orange-300 not-italic">
+                        ❌ {rawAnswer} (Correct: {correctAnswer})
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
             <button
               onClick={startGame}
               className="mt-8 px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
