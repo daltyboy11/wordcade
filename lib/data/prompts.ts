@@ -229,5 +229,5 @@ An example
 }
 \`\`\`
 
-Start easy with words that are only 4 letters long, progressing to a word with 10 or more letterts for the final one.
+Start easy with words that are only 4 letters long and progress to a word with 10 or more letterts for the final one.
 `;
