@@ -31,9 +31,8 @@ export default function FakeWords() {
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Fake Words Game</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Determine if the word and its definition are real or fake. A correct
-            answer is +1 point. A wrong answer is -1 point. You have 30 seconds
-            to answer as many as you can.
+            Determine if the word and its definition are real or fake. You have
+            30 seconds to answer as many as you can.
           </p>
           <Button
             onClick={startGame}
