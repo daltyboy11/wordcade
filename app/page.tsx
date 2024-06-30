@@ -41,9 +41,9 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
       <h1 className="text-6xl font-bold mb-4">Wordcade</h1>
-      <p className="text-xl mb-12 text-center max-w-2xl">
-        Welcome to Wordcade! Dive into a world of word-based mini games and
-        challenge your vocabulary skills.
+      <p className="text-xl mb-12 max-w-2xl">
+        Welcome to Wordcade! Dive into a world of word-based mini games.
+        Challenge your vocabulary skills and command of the English language.
       </p>
 
       <div className="grid gap-8 text-center lg:grid-cols-2 lg:text-left">
