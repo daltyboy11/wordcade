@@ -90,32 +90,20 @@ export default function Analogies() {
             <p className="text-xl mb-8">Your score: {score}</p>
             <h2 className="text-2xl mb-4 text-left">Your Answers:</h2>
             <ul className="list-disc list-inside text-left">
-              {answers.map((isCorrect, index) => {
+              {answers.map(({ isCorrect, rawAnswer }, index) => {
                 const question = data[index];
+                const answerText = question.options[rawAnswer].optionText;
+                const correctAnswerText = question.options.find(
+                  (option) => option.isCorrect
+                )?.optionText;
                 return (
                   <li key={index} className="mb-2">
                     {question.prompt.A} ={'>'} {question.prompt.B}:{' '}
                     {isCorrect ? (
-                      <span className="text-green-500">
-                        ✅{' '}
-                        {
-                          question.options.find((option) => option.isCorrect)
-                            ?.optionText
-                        }
-                      </span>
+                      <span className="text-green-500">✅ {answerText}</span>
                     ) : (
                       <span className="text-orange-700">
-                        ❌{' '}
-                        {
-                          question.options.find((option) => !option.isCorrect)
-                            ?.optionText
-                        }{' '}
-                        (Correct:{' '}
-                        {
-                          question.options.find((option) => option.isCorrect)
-                            ?.optionText
-                        }
-                        )
+                        ❌ {answerText} (Correct: {correctAnswerText})
                       </span>
                     )}
                   </li>

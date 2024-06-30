@@ -9,11 +9,11 @@ interface UseGameReturnType<T extends Game> {
   data?: GameQuestion[T][];
   fetchData: () => Promise<void>;
   startGame: () => void;
-  answerQuestion: (answer: any) => void; // Modified to accept a flexible answer type
+  answerQuestion: (answer: any) => void;
   timeLeft: number;
   score: number;
   currentQuestion: number;
-  answers: boolean[];
+  answers: { isCorrect: boolean; rawAnswer: any }[];
 }
 
 export function useGame<T extends Game>(
@@ -28,7 +28,9 @@ export function useGame<T extends Game>(
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
-  const [answers, setAnswers] = useState<boolean[]>([]);
+  const [answers, setAnswers] = useState<
+    { isCorrect: boolean; rawAnswer: any }[]
+  >([]);
 
   const fetchData = useCallback(async () => {
     setPageState((prevState) => ({
@@ -55,7 +57,10 @@ export function useGame<T extends Game>(
   const answerQuestion = useCallback(
     (answer: any) => {
       const isCorrect = validateAnswer(data[currentQuestion], answer);
-      setAnswers((prevAnswers) => [...prevAnswers, isCorrect]);
+      setAnswers((prevAnswers) => [
+        ...prevAnswers,
+        { isCorrect, rawAnswer: answer },
+      ]);
       setScore((prevScore) => (isCorrect ? prevScore + 1 : prevScore - 1));
       if (currentQuestion < data.length - 1) {
         setCurrentQuestion((prevQuestion) => prevQuestion + 1);
