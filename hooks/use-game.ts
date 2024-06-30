@@ -123,7 +123,8 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
   );
 
   useEffect(() => {
-    if (pageState.current === 'ingame' && timeLeft > 0) {
+    if (pageState.current !== 'ingame') return;
+    if (timeLeft > 0) {
       const timer = setTimeout(
         () => setTimeLeft((prevTime) => prevTime - 1),
         1000
