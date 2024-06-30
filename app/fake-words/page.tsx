@@ -1,9 +1,9 @@
 'use client';
 
+import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
 import { FakeWordQuestion } from '@/lib/fake-words';
 import { useRouter } from 'next/navigation';
-import { ClipLoader } from 'react-spinners';
 
 const validateFakeWordAnswer = (question: FakeWordQuestion, real: boolean) => {
   return question.real === real;
@@ -40,17 +40,12 @@ export default function FakeWords() {
             answer is +1 point. A wrong answer is -1 point. You have 30 seconds
             to answer as many as you can.
           </p>
-          <button
+          <Button
             onClick={startGame}
-            style={{ minWidth: '200px' }}
-            className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+            isLoading={currentState === 'loading-ingame'}
           >
-            {currentState === 'loading-ingame' ? (
-              <ClipLoader color="#fff" size={16} />
-            ) : (
-              'Start'
-            )}
-          </button>
+            Start
+          </Button>
         </div>
       )}
 
@@ -109,17 +104,12 @@ export default function FakeWords() {
                 );
               })}
             </ul>
-            <button
+            <Button
               onClick={startGame}
-              style={{ minWidth: '200px' }}
-              className="mt-8 px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+              isLoading={currentState === 'loading-ingame'}
             >
-              {currentState === 'loading-ingame' ? (
-                <ClipLoader color="#fff" size={16} />
-              ) : (
-                'Play Again'
-              )}
-            </button>
+              Play Again
+            </Button>
           </div>
         )}
     </main>

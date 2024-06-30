@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { WhoSaidItQuestion } from '@/lib/who-said-it';
 import { useGame } from '@/hooks/use-game';
-import { ClipLoader } from 'react-spinners';
+import { Button } from '@/components';
 
 const validateWhoSaidItAnswer = (
   question: WhoSaidItQuestion,
@@ -42,17 +42,12 @@ export default function WhoSaidIt() {
             Guess the originator of the quote. You have 30 seconds to answer as
             many as you can.
           </p>
-          <button
+          <Button
             onClick={startGame}
-            style={{ minWidth: '200px' }}
-            className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+            isLoading={currentState === 'loading-ingame'}
           >
-            {currentState === 'loading-ingame' ? (
-              <ClipLoader color="#fff" size={16} />
-            ) : (
-              'Start'
-            )}
-          </button>
+            Start
+          </Button>
         </div>
       )}
 
@@ -108,17 +103,12 @@ export default function WhoSaidIt() {
                 );
               })}
             </ul>
-            <button
+            <Button
               onClick={startGame}
-              style={{ minWidth: '200px' }}
-              className="mt-8 px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+              isLoading={currentState === 'loading-ingame'}
             >
-              {currentState === 'loading-ingame' ? (
-                <ClipLoader color="#fff" size={16} />
-              ) : (
-                'Play Again'
-              )}
-            </button>
+              PLay Again
+            </Button>
           </div>
         )}
     </main>
