@@ -1,5 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Game, GameQuestion, dataFetcher } from '@/lib/data/data-fetcher';
+import { AnalogyQuestion } from '@/lib/analogies';
+import { AntonymQuestion } from '@/lib/antonyms';
+import { FakeWordQuestion } from '@/lib/fake-words';
+import { SynonymQuestion } from '@/lib/synonyms';
+import { WhoSaidItQuestion } from '@/lib/who-said-it';
+import { WordScrambleQuestion } from '@/lib/word-scramble';
 
 type GameState = 'pregame' | 'loading-ingame' | 'ingame' | 'postgame';
 
@@ -16,10 +22,31 @@ interface UseGameReturnType<T extends Game> {
   answers: { isCorrect: boolean; rawAnswer: any }[];
 }
 
-export function useGame<T extends Game>(
-  gameType: T,
-  validateAnswer: (question: GameQuestion[T], answer: any) => boolean
-): UseGameReturnType<T> {
+const validators = {
+  analogies: (question: AnalogyQuestion, answerIndex: number): boolean =>
+    question.options[answerIndex].isCorrect,
+  antonyms: (question: AntonymQuestion, answerIndex: number): boolean =>
+    question.answer === answerIndex,
+  'fake-words': (question: FakeWordQuestion, real: boolean): boolean =>
+    question.real === real,
+  synonyms: (question: SynonymQuestion, answerIndex: number): boolean =>
+    question.answer === answerIndex,
+  'who-said-it': (question: WhoSaidItQuestion, answerIndex: number): boolean =>
+    question.answer === answerIndex,
+  'word-scramble': (question: WordScrambleQuestion, answer: string): boolean =>
+    question.word === answer,
+};
+
+function getValidator<T extends Game>(
+  gameType: T
+): (question: GameQuestion[T], answer: any) => boolean {
+  return validators[gameType] as (
+    question: GameQuestion[T],
+    answer: any
+  ) => boolean;
+}
+
+export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
   const [pageState, setPageState] = useState<{
     prev?: GameState;
     current: GameState;
@@ -56,7 +83,8 @@ export function useGame<T extends Game>(
 
   const answerQuestion = useCallback(
     (answer: any) => {
-      const isCorrect = validateAnswer(data[currentQuestion], answer);
+      const validator = getValidator(gameType);
+      const isCorrect = validator(data[currentQuestion], answer);
       setAnswers((prevAnswers) => [
         ...prevAnswers,
         { isCorrect, rawAnswer: answer },
@@ -71,7 +99,7 @@ export function useGame<T extends Game>(
         }));
       }
     },
-    [currentQuestion, data, validateAnswer]
+    [currentQuestion, data]
   );
 
   useEffect(() => {

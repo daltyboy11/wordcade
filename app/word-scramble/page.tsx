@@ -2,16 +2,8 @@
 
 import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
-import { WordScrambleQuestion } from '@/lib/word-scramble';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
-const validateWordScrambleAnswer = (
-  question: WordScrambleQuestion,
-  answer: string
-) => {
-  return question.word === answer;
-};
 
 export default function WordScramble() {
   const router = useRouter();
@@ -27,7 +19,7 @@ export default function WordScramble() {
     score,
     currentQuestion,
     answers,
-  } = useGame('word-scramble', validateWordScrambleAnswer);
+  } = useGame('word-scramble');
 
   useEffect(() => {
     if (data && data.length > 0) {

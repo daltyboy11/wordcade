@@ -2,12 +2,7 @@
 
 import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
-import { FakeWordQuestion } from '@/lib/fake-words';
 import { useRouter } from 'next/navigation';
-
-const validateFakeWordAnswer = (question: FakeWordQuestion, real: boolean) => {
-  return question.real === real;
-};
 
 export default function FakeWords() {
   const router = useRouter();
@@ -21,7 +16,7 @@ export default function FakeWords() {
     score,
     currentQuestion,
     answers,
-  } = useGame('fake-words', validateFakeWordAnswer);
+  } = useGame('fake-words');
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">

@@ -2,15 +2,7 @@
 
 import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
-import { SynonymQuestion } from '@/lib/synonyms';
 import { useRouter } from 'next/navigation';
-
-const validateSynonymAnswer = (
-  question: SynonymQuestion,
-  answerIndex: number
-) => {
-  return question.answer === answerIndex;
-};
 
 export default function Synonyms() {
   const router = useRouter();
@@ -24,7 +16,7 @@ export default function Synonyms() {
     score,
     currentQuestion,
     answers,
-  } = useGame('synonyms', validateSynonymAnswer);
+  } = useGame('synonyms');
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">

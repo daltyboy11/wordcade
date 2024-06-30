@@ -2,15 +2,7 @@
 
 import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
-import { AntonymQuestion } from '@/lib/antonyms';
 import { useRouter } from 'next/navigation';
-
-const validateAntonymAnswer = (
-  question: AntonymQuestion,
-  answerIndex: number
-) => {
-  return question.answer === answerIndex;
-};
 
 export default function Antonyms() {
   const router = useRouter();
@@ -24,7 +16,7 @@ export default function Antonyms() {
     score,
     currentQuestion,
     answers,
-  } = useGame('antonyms', validateAntonymAnswer);
+  } = useGame('antonyms');
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">

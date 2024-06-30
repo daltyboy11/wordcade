@@ -2,15 +2,7 @@
 
 import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
-import { AnalogyQuestion } from '@/lib/analogies';
 import { useRouter } from 'next/navigation';
-
-const validateAnalogyAnswer = (
-  question: AnalogyQuestion,
-  answerIndex: number
-): boolean => {
-  return question.options[answerIndex].isCorrect;
-};
 
 export default function Analogies() {
   const router = useRouter();
@@ -24,7 +16,7 @@ export default function Analogies() {
     score,
     currentQuestion,
     answers,
-  } = useGame('analogies', validateAnalogyAnswer);
+  } = useGame('analogies');
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">

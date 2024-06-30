@@ -1,16 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { WhoSaidItQuestion } from '@/lib/who-said-it';
 import { useGame } from '@/hooks/use-game';
 import { Button } from '@/components';
-
-const validateWhoSaidItAnswer = (
-  question: WhoSaidItQuestion,
-  answerIndex: number
-) => {
-  return question.answer === answerIndex;
-};
 
 export default function WhoSaidIt() {
   const router = useRouter();
@@ -24,7 +16,7 @@ export default function WhoSaidIt() {
     score,
     currentQuestion,
     answers,
-  } = useGame('who-said-it', validateWhoSaidItAnswer);
+  } = useGame('who-said-it');
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
