@@ -109,7 +109,11 @@ export default function Antonyms() {
               onClick={startGame}
               className="mt-8 px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
             >
-              Play Again
+              {currentState === 'loading-ingame' ? (
+                <ClipLoader color="#fff" size={16} />
+              ) : (
+                'Play Again'
+              )}
             </button>
           </div>
         )}
