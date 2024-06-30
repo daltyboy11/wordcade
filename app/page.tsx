@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 const games = [
   {
     href: '/games/synonyms',
@@ -36,8 +34,6 @@ const games = [
 ];
 
 export default function Home() {
-  const router = useRouter();
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
       <h1 className="text-6xl font-bold mb-4">Wordcade</h1>
