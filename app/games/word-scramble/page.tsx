@@ -73,6 +73,7 @@ export default function WordScramble() {
           <Button
             onClick={startGame}
             isLoading={currentState === 'loading-ingame'}
+            loadingText="Claude is creating a game"
           >
             Start
           </Button>
@@ -141,6 +142,7 @@ export default function WordScramble() {
             <Button
               onClick={startGame}
               isLoading={currentState === 'loading-ingame'}
+              loadingText="Claude is creating a game"
             >
               Play Again
             </Button>

@@ -37,6 +37,7 @@ export default function WhoSaidIt() {
           <Button
             onClick={startGame}
             isLoading={currentState === 'loading-ingame'}
+            loadingText="Claude is creating a game"
           >
             Start
           </Button>
@@ -98,6 +99,7 @@ export default function WhoSaidIt() {
             <Button
               onClick={startGame}
               isLoading={currentState === 'loading-ingame'}
+              loadingText="Claude is creating a game"
             >
               PLay Again
             </Button>
