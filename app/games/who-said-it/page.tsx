@@ -101,7 +101,7 @@ export default function WhoSaidIt() {
               isLoading={currentState === 'loading-ingame'}
               loadingText="Claude is creating a game"
             >
-              PLay Again
+              Play Again
             </Button>
           </div>
         )}
