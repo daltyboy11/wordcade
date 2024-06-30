@@ -2,7 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { AntonymQuestion, antonymsSampleData } from '@/lib/antonyms';
+import { AntonymQuestion } from '@/lib/antonyms';
+import { dataFetcher } from '@/lib/data/data-fetcher';
 
 export default function Antonyms() {
   const router = useRouter();
@@ -14,11 +15,14 @@ export default function Antonyms() {
   const [data, setData] = useState<AntonymQuestion[]>([]);
 
   useEffect(() => {
-    // TODO - fetch data from Claude
-    if (data.length === 0) {
-      setData(antonymsSampleData);
-    }
-  }, []);
+    const fetchGameData = async () => {
+      if (data.length === 0) {
+        const fetchedData = await dataFetcher.fetch('antonyms');
+        setData(fetchedData);
+      }
+    };
+    fetchGameData();
+  }, [data, dataFetcher]);
 
   useEffect(() => {
     if (pageState === 'ingame' && timeLeft > 0) {

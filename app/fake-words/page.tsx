@@ -2,7 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { FakeWordQuestion, fakeWordSampleData } from '@/lib/fake-words';
+import { FakeWordQuestion } from '@/lib/fake-words';
+import { dataFetcher } from '@/lib/data/data-fetcher';
 
 export default function FakeWords() {
   const router = useRouter();
@@ -14,11 +15,14 @@ export default function FakeWords() {
   const [data, setData] = useState<FakeWordQuestion[]>([]);
 
   useEffect(() => {
-    // TODO - fetch data from Claude
-    if (data.length === 0) {
-      setData(fakeWordSampleData);
-    }
-  }, []);
+    const fetchGameData = async () => {
+      if (data.length === 0) {
+        const fetchedData = await dataFetcher.fetch('fake-words');
+        setData(fetchedData);
+      }
+    };
+    fetchGameData();
+  }, [data, dataFetcher]);
 
   useEffect(() => {
     if (pageState === 'ingame' && timeLeft > 0) {

@@ -2,7 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { WhoSaidItQuestion, whoSaidItSampleData } from '@/lib/who-said-it';
+import { WhoSaidItQuestion } from '@/lib/who-said-it';
+import { dataFetcher } from '@/lib/data/data-fetcher';
 
 export default function WhoSaidIt() {
   const router = useRouter();
@@ -14,10 +15,14 @@ export default function WhoSaidIt() {
   const [data, setData] = useState<WhoSaidItQuestion[]>([]);
 
   useEffect(() => {
-    if (data.length === 0) {
-      setData(whoSaidItSampleData);
-    }
-  }, []);
+    const fetchGameData = async () => {
+      if (data.length === 0) {
+        const fetchedData = await dataFetcher.fetch('who-said-it');
+        setData(fetchedData);
+      }
+    };
+    fetchGameData();
+  }, [data, dataFetcher]);
 
   useEffect(() => {
     if (pageState === 'ingame' && timeLeft > 0) {

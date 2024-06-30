@@ -2,7 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { SynonymQuestion, synonymSampleData } from '@/lib/synonyms';
+import { SynonymQuestion } from '@/lib/synonyms';
+import { dataFetcher } from '@/lib/data/data-fetcher';
 
 export default function Synonyms() {
   const router = useRouter();
@@ -14,11 +15,14 @@ export default function Synonyms() {
   const [data, setData] = useState<SynonymQuestion[]>([]);
 
   useEffect(() => {
-    // TODO - fetch data from Claude
-    if (data.length === 0) {
-      setData(synonymSampleData);
-    }
-  }, []);
+    const fetchGameData = async () => {
+      if (data.length === 0) {
+        const fetchedData = await dataFetcher.fetch('synonyms');
+        setData(fetchedData);
+      }
+    };
+    fetchGameData();
+  }, [data, dataFetcher]);
 
   useEffect(() => {
     if (pageState === 'ingame' && timeLeft > 0) {

@@ -2,10 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import {
-  WordScrambleQuestion,
-  wordScrambleSampleData,
-} from '@/lib/word-scramble';
+import { WordScrambleQuestion } from '@/lib/word-scramble';
+import { dataFetcher } from '@/lib/data/data-fetcher';
 
 export default function WordScramble() {
   const router = useRouter();
@@ -17,10 +15,14 @@ export default function WordScramble() {
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
-    if (data.length === 0) {
-      setData(wordScrambleSampleData);
-    }
-  }, []);
+    const fetchGameData = async () => {
+      if (data.length === 0) {
+        const fetchedData = await dataFetcher.fetch('word-scramble');
+        setData(fetchedData);
+      }
+    };
+    fetchGameData();
+  }, [data, dataFetcher]);
 
   useEffect(() => {
     if (data.length > 0) {

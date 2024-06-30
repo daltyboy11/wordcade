@@ -2,7 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { AnalogyQuestion, analogySampleData } from '@/lib/analogies';
+import { AnalogyQuestion } from '@/lib/analogies';
+import { dataFetcher } from '@/lib/data/data-fetcher';
 
 export default function Analogies() {
   const router = useRouter();
@@ -14,11 +15,14 @@ export default function Analogies() {
   const [data, setData] = useState<AnalogyQuestion[]>([]);
 
   useEffect(() => {
-    // TODO - fetch data from Claude
-    if (data.length === 0) {
-      setData(analogySampleData);
-    }
-  }, []);
+    const fetchGameData = async () => {
+      if (data.length === 0) {
+        const fetchedData = await dataFetcher.fetch('analogies');
+        setData(fetchedData);
+      }
+    };
+    fetchGameData();
+  }, [data, dataFetcher]);
 
   useEffect(() => {
     if (pageState === 'ingame' && timeLeft > 0) {
