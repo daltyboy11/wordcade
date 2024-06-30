@@ -5,7 +5,7 @@ import { SynonymQuestion, synonymSampleData } from '../synonyms';
 import { WhoSaidItQuestion, whoSaidItSampleData } from '../who-said-it';
 import { WordScrambleQuestion, wordScrambleSampleData } from '../word-scramble';
 
-type Game =
+export type Game =
   | 'analogies'
   | 'antonyms'
   | 'fake-words'
@@ -13,7 +13,7 @@ type Game =
   | 'who-said-it'
   | 'word-scramble';
 
-type GameQuestion = {
+export type GameQuestion = {
   analogies: AnalogyQuestion;
   antonyms: AntonymQuestion;
   'fake-words': FakeWordQuestion;
@@ -28,6 +28,9 @@ interface GameDataFetcher {
 
 class SampleDataFetcher implements GameDataFetcher {
   async fetch<T extends Game>(game: T): Promise<GameQuestion[T][]> {
+    // Simulate a delay of half a second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     switch (game) {
       case 'analogies':
         return analogySampleData as GameQuestion[T][];
