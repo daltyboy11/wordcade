@@ -4,32 +4,32 @@ import { useRouter } from 'next/navigation';
 
 const games = [
   {
-    href: '/synonyms',
+    href: '/games/synonyms',
     title: 'Synonyms',
     description: 'Choose the correct synonym and score points!',
   },
   {
-    href: '/fake-words',
+    href: '/games/fake-words',
     title: 'Fake Words',
     description: 'Determine if the word is real or fake!',
   },
   {
-    href: '/antonyms',
+    href: '/games/antonyms',
     title: 'Antonyms',
     description: 'Choose the correct antonym and score points!',
   },
   {
-    href: '/analogies',
+    href: '/games/analogies',
     title: 'Analogies',
     description: 'Solve the analogy and score points!',
   },
   {
-    href: '/word-scramble',
+    href: '/games/word-scramble',
     title: 'Word Scramble',
     description: 'Unscramble the word!',
   },
   {
-    href: '/who-said-it',
+    href: '/games/who-said-it',
     title: 'Who Said It?',
     description: 'Identify the quote author!',
   },

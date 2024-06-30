@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Game, GameQuestion, dataFetcher } from '@/lib/data/data-fetcher';
+import { Game, GameQuestion } from '@/lib/data/data-fetcher';
 import { AnalogyQuestion } from '@/lib/analogies';
 import { AntonymQuestion } from '@/lib/antonyms';
 import { FakeWordQuestion } from '@/lib/fake-words';
@@ -65,16 +65,36 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
       current: 'loading-ingame',
     }));
 
-    const fetchedData = await dataFetcher.fetch(gameType);
-    setData(fetchedData);
-    setCurrentQuestion(0);
-    setScore(0);
-    setTimeLeft(30);
-    setAnswers([]);
-    setPageState((prevState) => ({
-      prev: prevState.current,
-      current: 'ingame',
-    }));
+    try {
+      const response = await fetch('/games', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ game: gameType }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch game data');
+      }
+
+      const { gameData } = await response.json();
+      setData(gameData);
+      setCurrentQuestion(0);
+      setScore(0);
+      setTimeLeft(30);
+      setAnswers([]);
+      setPageState((prevState) => ({
+        prev: prevState.current,
+        current: 'ingame',
+      }));
+    } catch (error) {
+      console.error('Error fetching game data:', error);
+      setPageState((prevState) => ({
+        prev: prevState.current,
+        current: 'pregame',
+      }));
+    }
   }, [gameType]);
 
   const startGame = useCallback(() => {
@@ -99,7 +119,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
         }));
       }
     },
-    [currentQuestion, data]
+    [currentQuestion, data, gameType]
   );
 
   useEffect(() => {

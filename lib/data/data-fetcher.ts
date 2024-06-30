@@ -5,6 +5,15 @@ import { FakeWordQuestion, fakeWordSampleData } from '../fake-words';
 import { SynonymQuestion, synonymSampleData } from '../synonyms';
 import { WhoSaidItQuestion, whoSaidItSampleData } from '../who-said-it';
 import { WordScrambleQuestion, wordScrambleSampleData } from '../word-scramble';
+import {
+  analogiesPrompt,
+  antonymsPrompt,
+  fakeWordsPrompt,
+  synonymsPrompt,
+  systemPrompt,
+  whoSaidItPrompt,
+  wordScramblePrompt,
+} from './prompts';
 
 export type Game =
   | 'analogies'
@@ -29,8 +38,8 @@ interface GameDataFetcher {
 
 class SampleDataFetcher implements GameDataFetcher {
   async fetch<T extends Game>(game: T): Promise<GameQuestion[T][]> {
-    // Simulate a delay of half a second
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    // Simulate delay of 5 seconds... that's how long Claude takes :'()
+    await new Promise((resolve) => setTimeout(resolve, 5000));
 
     switch (game) {
       case 'analogies':
@@ -51,59 +60,33 @@ class SampleDataFetcher implements GameDataFetcher {
   }
 }
 
-const systemPrompt = `
-You are the brain behind a virtual arcade called Wordcade. Wordcade is filled with many mini games, all word related. Some example games are:
-
-1. Synonyms: The user is presented with a word and three potential synonyms, and the goal is to choose the true synonym from the options. Choosing the true synonym awards you one point. Choosing the wrong option deducts one point. The user aims to make as many correct choices as possible in 30 seconds.
-
-2. Fake words: The user is presented with a word and the word's definition, but the word may or may not be real! The goal is to choose if the word is fake or real. Again, the user answers as many as possible in 30 seconds.
-
-These are just two examples, but Wordcade is filled with many more. It would be a huge burden for the developer of Wordcade to maintain a repository of words for each game, and continuously update that repository to keep things fresh and interesting. That's where you come in. Your task is to generate data for an instance of a Wordcade minigame when asked, and to produce this data in the right format. The schemas are presented below:
-
-analogies
-
-synonyms
-\`\`\`
-{
-    "word": "ubiquitous",
-    "options": ["rare", "omnipresent", "unseen"],
-    "answer": 1
-}
-\`\`\`
-
-fake-words
-\`\`\`
-{
-    "word": "blateration",
-    "definition": "the act of incessantly babbling or chattering",
-    "real": true
-}
-\`\`\`
-
-You will be asked to generate arrays of elements for the minigame. The prompt might look something like "Give me an array of 15 elements for a Fake Words minigame".
-`;
-
-const prompts: Record<Game, string> = {
-  analogies:
-    'Give me an array of 10 elements for an analogies minigame, gradually increasing in difficulty from the beginning of the array to the end of the arra from the beginning of the array to the end of the array.',
-  antonyms: 'bleh',
-  'fake-words': 'bleh',
-  synonyms: 'blah',
-  'who-said-it': 'whoa',
-  'word-scramble': "let's go",
+const maperoni: Record<Game, string> = {
+  analogies: analogiesPrompt,
+  antonyms: antonymsPrompt,
+  'fake-words': fakeWordsPrompt,
+  synonyms: synonymsPrompt,
+  'who-said-it': whoSaidItPrompt,
+  'word-scramble': wordScramblePrompt,
 };
 
 class ClaudeDataFetcher implements GameDataFetcher {
   constructor(private readonly api: Anthropic) {}
 
   async fetch<T extends Game>(game: T): Promise<GameQuestion[T][]> {
-    const msg = await this.api.messages.create({
+    const message = await this.api.messages.create({
       max_tokens: 4096,
       model: 'claude-3-haiku-20240307',
       system: systemPrompt,
-      messages: [{ role: 'user', content: prompts[game] }],
+      messages: [{ role: 'user', content: maperoni[game] }],
     });
-    return [];
+    if (message.content.length > 0 && message.content[0].type === 'text') {
+      // console.log({ claudeResponseText: message.content[0].text })
+      const data = JSON.parse(message.content[0].text);
+      // console.log({ claudeResponseJson: data })
+      return data;
+    } else {
+      return [];
+    }
   }
 }
 
@@ -116,7 +99,10 @@ const claudeDataFetcher = (apiKey: string) =>
     })
   );
 
-export const dataFetcher =
-  process.env.DATA_SOURCE === 'claude' && !!process.env.ANTHROPIC_API_KEY
-    ? claudeDataFetcher(process.env.ANTHROPIC_API_KEY)
-    : sampleDataFetcher();
+const useClaudeDataSource =
+  process.env.NEXT_PUBLIC_DATA_SOURCE === 'claude' &&
+  !!process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY;
+
+export const dataFetcher = useClaudeDataSource
+  ? claudeDataFetcher(process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY!)
+  : sampleDataFetcher();
