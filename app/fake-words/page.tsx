@@ -5,7 +5,7 @@ import { FakeWordQuestion } from '@/lib/fake-words';
 import { useRouter } from 'next/navigation';
 import { ClipLoader } from 'react-spinners';
 
-const validateFakeWordsAnswer = (question: FakeWordQuestion, real: boolean) => {
+const validateFakeWordAnswer = (question: FakeWordQuestion, real: boolean) => {
   return question.real === real;
 };
 
@@ -21,7 +21,7 @@ export default function FakeWords() {
     score,
     currentQuestion,
     answers,
-  } = useGame('fake-words', validateFakeWordsAnswer);
+  } = useGame('fake-words', validateFakeWordAnswer);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
