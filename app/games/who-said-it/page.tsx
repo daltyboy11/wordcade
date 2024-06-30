@@ -31,8 +31,7 @@ export default function WhoSaidIt() {
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Who Said It?</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Guess the quote author. You have 30 seconds to answer as many as you
-            can.
+            Guess the author of the quote.
           </p>
           <Button
             onClick={startGame}

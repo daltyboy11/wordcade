@@ -75,7 +75,8 @@ class ClaudeDataFetcher implements GameDataFetcher {
   async fetch<T extends Game>(game: T): Promise<GameQuestion[T][]> {
     const message = await this.api.messages.create({
       max_tokens: 4096,
-      model: 'claude-3-haiku-20240307',
+      model: 'claude-3-5-sonnet-20240620',
+      temperature: 0.85,
       system: systemPrompt,
       messages: [{ role: 'user', content: maperoni[game] }],
     });

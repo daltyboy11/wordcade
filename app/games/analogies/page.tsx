@@ -29,11 +29,10 @@ export default function Analogies() {
       {(currentState === 'pregame' ||
         (currentState === 'loading-ingame' && previousState === 'pregame')) && (
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Analogies Game</h1>
+          <h1 className="text-4xl font-bold mb-4">Analogies</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Determine the relationship between the given pair of words and
-            choose the option that has a similar relationship. You have 30
-            seconds to answer as many as you can.
+            Determine the relationship between the pair of words and choose the
+            option that most closely matches that relationship.
           </p>
           <Button
             onClick={startGame}

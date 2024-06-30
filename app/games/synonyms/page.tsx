@@ -29,10 +29,9 @@ export default function Synonyms() {
       {(currentState === 'pregame' ||
         (currentState === 'loading-ingame' && previousState === 'pregame')) && (
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Synonyms Game</h1>
+          <h1 className="text-4xl font-bold mb-4">Synonyms</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Choose the correct synonym for each word. You have 30 seconds to
-            answer as many as you can.
+            Find the synonym for each word.
           </p>
           <Button
             onClick={startGame}

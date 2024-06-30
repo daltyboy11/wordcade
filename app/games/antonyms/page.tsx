@@ -29,10 +29,9 @@ export default function Antonyms() {
       {(currentState === 'pregame' ||
         (currentState === 'loading-ingame' && previousState === 'pregame')) && (
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Antonyms Game</h1>
+          <h1 className="text-4xl font-bold mb-4">Antonyms</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Choose the correct antonym for each word. You have 30 seconds to
-            answer as many as you can.
+            Find the antonym (opposite) for each word.
           </p>
           <Button
             onClick={startGame}

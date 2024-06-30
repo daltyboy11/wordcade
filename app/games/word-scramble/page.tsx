@@ -65,10 +65,9 @@ export default function WordScramble() {
       {(currentState === 'pregame' ||
         (currentState === 'loading-ingame' && previousState === 'pregame')) && (
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Word Scramble Game</h1>
+          <h1 className="text-4xl font-bold mb-4">Word Scramble</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Unscramble the word by clicking on the tiles. You have 30 seconds to
-            unscramble as many words as you can.
+            Unscramble the word by clicking on the tiles.
           </p>
           <Button
             onClick={startGame}

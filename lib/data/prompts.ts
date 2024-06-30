@@ -58,7 +58,7 @@ The exact data schema will be specified unambiguously in the prompts
 `;
 
 export const analogiesPrompt = `
-Generate an array of 12 questions for the analogies minigame. Your response should be a valid JSON array, and nothing else.
+Generate an array of 10 questions for the analogies minigame. Your response should be a valid JSON array, and nothing else.
 Elements in the array conform to this schema 
 \`\`\`
 {
@@ -100,7 +100,7 @@ An example:
 }
 \`\`\`
 
-Make the elements in the array progressively more difficult, starting with an easy difficulty and ending with an intermediate / moderate difficulty.
+The correct option should obviously fit the relationship, and the incorrect options should not. Don't make the choices ambiguous.
 `;
 
 export const antonymsPrompt = `
@@ -125,7 +125,7 @@ An example
 }
 \`\`\`
 
-Make the elements in the array progressively more difficult, starting with an easy difficulty and ending with an intermediate / moderate difficulty.
+Make the elements in the array progressively more difficult, starting with an easy difficulty and ending with a hard difficulty. Hard difficulty should mean that the word is complex or lesser known, or that the antonym is complex or lesser known.
 `;
 
 export const fakeWordsPrompt = `
