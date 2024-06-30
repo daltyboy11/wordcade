@@ -4,10 +4,16 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { AnalogyQuestion } from '@/lib/analogies';
 import { dataFetcher } from '@/lib/data/data-fetcher';
+import { ClipLoader } from 'react-spinners';
+
+type GameState = 'pregame' | 'loading-ingame' | 'ingame' | 'postgame';
 
 export default function Analogies() {
   const router = useRouter();
-  const [pageState, setPageState] = useState('pregame');
+  const [pageState, setPageState] = useState<{
+    prev?: GameState;
+    current: GameState;
+  }>({ current: 'pregame' });
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
@@ -25,20 +31,36 @@ export default function Analogies() {
   }, [data, dataFetcher]);
 
   useEffect(() => {
-    if (pageState === 'ingame' && timeLeft > 0) {
+    if (pageState.current === 'ingame' && timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
     } else if (timeLeft === 0) {
-      setPageState('postgame');
+      setPageState({
+        prev: 'ingame',
+        current: 'postgame',
+      });
     }
   }, [pageState, timeLeft]);
 
-  const handleStartGame = () => {
-    setPageState('ingame');
+  const handleStartGame = async () => {
+    setPageState({
+      prev: pageState.current,
+      current: 'loading-ingame',
+    });
+
+    // Simulate a delay of 1 second
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const fetchedData = await dataFetcher.fetch('analogies');
+    setData(fetchedData);
     setCurrentQuestion(0);
     setScore(0);
     setTimeLeft(30);
     setAnswers([]);
+    setPageState({
+      prev: 'loading-ingame',
+      current: 'ingame',
+    });
   };
 
   const handleAnswer = (isCorrect: boolean) => {
@@ -51,7 +73,10 @@ export default function Analogies() {
     if (currentQuestion < data.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      setPageState('postgame');
+      setPageState({
+        prev: 'ingame',
+        current: 'postgame',
+      });
     }
   };
 
@@ -63,7 +88,9 @@ export default function Analogies() {
       >
         Back to Arcade
       </button>
-      {pageState === 'pregame' && (
+      {(pageState.current === 'pregame' ||
+        (pageState.current === 'loading-ingame' &&
+          pageState.prev === 'pregame')) && (
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Analogies Game</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
@@ -76,12 +103,16 @@ export default function Analogies() {
             style={{ minWidth: '200px' }}
             className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
           >
-            Start
+            {pageState.current === 'loading-ingame' ? (
+              <ClipLoader color="#fff" size={16} />
+            ) : (
+              'Start'
+            )}
           </button>
         </div>
       )}
 
-      {pageState === 'ingame' && (
+      {pageState.current === 'ingame' && (
         <div className="text-center" style={{ minWidth: '300px' }}>
           <div className="mb-4">
             <h1 className="text-4xl font-bold" style={{ minWidth: '200px' }}>
@@ -106,7 +137,9 @@ export default function Analogies() {
         </div>
       )}
 
-      {pageState === 'postgame' && (
+      {(pageState.current === 'postgame' ||
+        (pageState.current === 'loading-ingame' &&
+          pageState.prev === 'postgame')) && (
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Game Over</h1>
           <p className="text-xl mb-8">Your score: {score}</p>
@@ -146,9 +179,14 @@ export default function Analogies() {
           </ul>
           <button
             onClick={handleStartGame}
+            style={{ minWidth: '200px' }}
             className="mt-8 px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
           >
-            Play Again
+            {pageState.current === 'loading-ingame' ? (
+              <ClipLoader color="#fff" size={16} />
+            ) : (
+              'Play Again'
+            )}
           </button>
         </div>
       )}
