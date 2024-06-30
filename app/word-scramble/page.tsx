@@ -1,66 +1,51 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useGame } from '@/hooks/use-game';
 import { WordScrambleQuestion } from '@/lib/word-scramble';
-import { dataFetcher } from '@/lib/data/data-fetcher';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { ClipLoader } from 'react-spinners';
+
+const validateWordScrambleAnswer = (
+  question: WordScrambleQuestion,
+  answer: string
+) => {
+  return question.word === answer;
+};
 
 export default function WordScramble() {
   const router = useRouter();
-  const [pageState, setPageState] = useState('pregame');
-  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedTiles, setSelectedTiles] = useState<string[]>([]);
   const [scrambledTiles, setScrambledTiles] = useState<string[]>([]);
-  const [data, setData] = useState<WordScrambleQuestion[]>([]);
-  const [timeLeft, setTimeLeft] = useState(0);
+  const {
+    currentState,
+    previousState,
+    data,
+    startGame,
+    answerQuestion,
+    timeLeft,
+    score,
+    currentQuestion,
+    answers,
+  } = useGame('word-scramble', validateWordScrambleAnswer);
 
   useEffect(() => {
-    const fetchGameData = async () => {
-      if (data.length === 0) {
-        const fetchedData = await dataFetcher.fetch('word-scramble');
-        setData(fetchedData);
-      }
-    };
-    fetchGameData();
-  }, [data, dataFetcher]);
-
-  useEffect(() => {
-    if (data.length > 0) {
+    if (data && data.length > 0) {
       setScrambledTiles(data[currentQuestion].scrambled.split(''));
     }
   }, [data, currentQuestion]);
 
   useEffect(() => {
-    if (data.length === 0) return;
+    if (!data || data.length === 0) return;
     if (selectedTiles.length === data[currentQuestion].word.length) {
       const formedWord = selectedTiles.join('');
-      if (formedWord === data[currentQuestion].word) {
-        if (currentQuestion < data.length - 1) {
-          setCurrentQuestion(currentQuestion + 1);
-          setSelectedTiles([]);
-          setScrambledTiles(data[currentQuestion + 1].scrambled.split(''));
-        } else {
-          setPageState('postgame');
-        }
+      answerQuestion(formedWord);
+      setSelectedTiles([]);
+      if (currentQuestion < data.length - 1) {
+        setScrambledTiles(data[currentQuestion + 1].scrambled.split(''));
       }
     }
   }, [selectedTiles, data, currentQuestion]);
-
-  useEffect(() => {
-    if (pageState === 'ingame' && timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (pageState === 'ingame' && timeLeft === 0) {
-      setPageState('postgame');
-    }
-  }, [pageState, timeLeft]);
-
-  const handleStartGame = () => {
-    setPageState('ingame');
-    setCurrentQuestion(0);
-    setSelectedTiles([]);
-    setTimeLeft(300); // Reset the timer to 30 seconds
-  };
 
   const handleSlotClick = (index: number) => {
     const tile = selectedTiles[index];
@@ -85,7 +70,8 @@ export default function WordScramble() {
       >
         Back to Arcade
       </button>
-      {pageState === 'pregame' && (
+      {(currentState === 'pregame' ||
+        (currentState === 'loading-ingame' && previousState === 'pregame')) && (
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Word Scramble Game</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto text-left">
@@ -93,16 +79,20 @@ export default function WordScramble() {
             unscramble as many words as you can.
           </p>
           <button
-            onClick={handleStartGame}
+            onClick={startGame}
             style={{ minWidth: '200px' }}
             className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
           >
-            Start
+            {currentState === 'loading-ingame' ? (
+              <ClipLoader color="#fff" size={16} />
+            ) : (
+              'Start'
+            )}
           </button>
         </div>
       )}
 
-      {pageState === 'ingame' && (
+      {currentState === 'ingame' && data && (
         <div className="text-center">
           <div className="mb-4">
             <h1 className="text-4xl font-bold">{timeLeft}</h1>
@@ -134,21 +124,27 @@ export default function WordScramble() {
         </div>
       )}
 
-      {pageState === 'postgame' && (
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Game Over</h1>
-          <p className="text-xl mb-8">
-            Your score:{' '}
-            {selectedTiles.join('') === data[currentQuestion].word ? 1 : 0}
-          </p>
-          <button
-            onClick={handleStartGame}
-            className="mt-8 px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
-          >
-            Play Again
-          </button>
-        </div>
-      )}
+      {(currentState === 'postgame' ||
+        (currentState === 'loading-ingame' && previousState === 'postgame')) &&
+        data && (
+          <div className="text-center">
+            <h1 className="text-4xl font-bold mb-4">Game Over</h1>
+            <p className="text-xl mb-8">
+              Your score:{' '}
+              {selectedTiles.join('') === data[currentQuestion].word ? 1 : 0}
+            </p>
+            <button
+              onClick={startGame}
+              className="mt-8 px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+            >
+              {currentState === 'loading-ingame' ? (
+                <ClipLoader color="#fff" size={16} />
+              ) : (
+                'Play Again'
+              )}
+            </button>
+          </div>
+        )}
     </main>
   );
 }
