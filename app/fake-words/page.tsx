@@ -2,8 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import sampleData from '../../lib/fake-words/example.json';
-import { FakeWordQuestion } from '@/lib/fake-words';
+import { FakeWordQuestion, fakeWordSampleData } from '@/lib/fake-words';
 
 export default function FakeWords() {
   const router = useRouter();
@@ -17,7 +16,7 @@ export default function FakeWords() {
   useEffect(() => {
     // TODO - fetch data from Claude
     if (data.length === 0) {
-      setData(sampleData);
+      setData(fakeWordSampleData);
     }
   }, []);
 

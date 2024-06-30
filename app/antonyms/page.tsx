@@ -2,8 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import sampleData from '../../lib/antonyms/example.json';
-import { AntonymQuestion } from '@/lib/antonyms';
+import { AntonymQuestion, antonymsSampleData } from '@/lib/antonyms';
 
 export default function Antonyms() {
   const router = useRouter();
@@ -17,7 +16,7 @@ export default function Antonyms() {
   useEffect(() => {
     // TODO - fetch data from Claude
     if (data.length === 0) {
-      setData(sampleData);
+      setData(antonymsSampleData);
     }
   }, []);
 

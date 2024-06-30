@@ -2,8 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import sampleData from '../../lib/synonyms/example.json';
-import { SynonymQuestion } from '@/lib/synonyms';
+import { SynonymQuestion, synonymSampleData } from '@/lib/synonyms';
 
 export default function Synonyms() {
   const router = useRouter();
@@ -17,7 +16,7 @@ export default function Synonyms() {
   useEffect(() => {
     // TODO - fetch data from Claude
     if (data.length === 0) {
-      setData(sampleData);
+      setData(synonymSampleData);
     }
   }, []);
 

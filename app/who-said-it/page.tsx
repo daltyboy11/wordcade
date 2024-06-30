@@ -2,8 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import sampleData from '../../lib/who-said-it/example.json';
-import { WhoSaidItQuestion } from '@/lib/who-said-it';
+import { WhoSaidItQuestion, whoSaidItSampleData } from '@/lib/who-said-it';
 
 export default function WhoSaidIt() {
   const router = useRouter();
@@ -16,7 +15,7 @@ export default function WhoSaidIt() {
 
   useEffect(() => {
     if (data.length === 0) {
-      setData(sampleData);
+      setData(whoSaidItSampleData);
     }
   }, []);
 

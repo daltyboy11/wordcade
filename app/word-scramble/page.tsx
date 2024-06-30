@@ -2,8 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import sampleData from '../../lib/word-scramble/example.json';
-import { WordScrambleQuestion } from '@/lib/word-scramble';
+import {
+  WordScrambleQuestion,
+  wordScrambleSampleData,
+} from '@/lib/word-scramble';
 
 export default function WordScramble() {
   const router = useRouter();
@@ -16,7 +18,7 @@ export default function WordScramble() {
 
   useEffect(() => {
     if (data.length === 0) {
-      setData(sampleData);
+      setData(wordScrambleSampleData);
     }
   }, []);
 

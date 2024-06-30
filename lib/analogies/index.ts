@@ -1,3 +1,5 @@
+import sampleData from './example.json';
+
 export type AnalogyQuestion = {
   prompt: {
     A: string;
@@ -6,3 +8,5 @@ export type AnalogyQuestion = {
   options: { optionText: string; isCorrect: boolean }[];
   explanation: string;
 };
+
+export const analogySampleData = sampleData;
