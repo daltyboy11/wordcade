@@ -100,9 +100,8 @@ const claudeDataFetcher = (apiKey: string) =>
   );
 
 const useClaudeDataSource =
-  process.env.NEXT_PUBLIC_DATA_SOURCE === 'claude' &&
-  !!process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY;
+  process.env.DATA_SOURCE === 'claude' && !!process.env.ANTHROPIC_API_KEY;
 
 export const dataFetcher = useClaudeDataSource
-  ? claudeDataFetcher(process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY!)
+  ? claudeDataFetcher(process.env.ANTHROPIC_API_KEY!)
   : sampleDataFetcher();
