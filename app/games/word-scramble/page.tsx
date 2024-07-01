@@ -7,8 +7,11 @@ import { useEffect, useState } from 'react';
 
 export default function WordScramble() {
   const router = useRouter();
-  const [selectedTiles, setSelectedTiles] = useState<string[]>([]);
-  const [scrambledTiles, setScrambledTiles] = useState<string[]>([]);
+  const [selectedTiles, setSelectedTiles] = useState<(string | null)[]>([]);
+  const [scrambledTiles, setScrambledTiles] = useState<(string | null)[]>([]);
+  const [scrambledTilePositions, setScrambledTilePositions] = useState<
+    (string | null)[]
+  >([]);
   const {
     currentState,
     previousState,
@@ -23,18 +26,26 @@ export default function WordScramble() {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      setScrambledTiles(data[currentQuestion].scrambled.split(''));
+      const scrambled = data[currentQuestion].scrambled.split('');
+      setScrambledTiles(scrambled);
+      setScrambledTilePositions(scrambled.map((tile) => tile));
+      setSelectedTiles(Array(scrambled.length).fill(null));
     }
   }, [data, currentQuestion]);
 
   useEffect(() => {
     if (!data || data.length === 0) return;
-    if (selectedTiles.length === data[currentQuestion].word.length) {
+    if (
+      selectedTiles.filter((tile) => tile !== null).length ===
+      data[currentQuestion].word.length
+    ) {
       const formedWord = selectedTiles.join('');
       answerQuestion(formedWord);
-      setSelectedTiles([]);
+      setSelectedTiles(Array(data[currentQuestion].word.length).fill(null));
       if (currentQuestion < data.length - 1) {
-        setScrambledTiles(data[currentQuestion + 1].scrambled.split(''));
+        const nextScrambled = data[currentQuestion + 1].scrambled.split('');
+        setScrambledTiles(nextScrambled);
+        setScrambledTilePositions(nextScrambled.map((tile) => tile));
       }
     }
   }, [selectedTiles, data, currentQuestion]);
@@ -42,16 +53,47 @@ export default function WordScramble() {
   const handleSlotClick = (index: number) => {
     const tile = selectedTiles[index];
     if (tile) {
-      setScrambledTiles([...scrambledTiles, tile]);
-      const newSelectedTiles = selectedTiles.filter((_, i) => i !== index);
-      setSelectedTiles(newSelectedTiles);
+      const scrambledIndex = scrambledTilePositions.findIndex(
+        (t) => t === null
+      );
+      if (scrambledIndex !== -1) {
+        setScrambledTiles((prev) => {
+          const newScrambled = [...prev];
+          newScrambled[scrambledIndex] = tile;
+          return newScrambled;
+        });
+        setScrambledTilePositions((prev) => {
+          const newPositions = [...prev];
+          newPositions[scrambledIndex] = tile;
+          return newPositions;
+        });
+        const newSelectedTiles = [...selectedTiles];
+        newSelectedTiles[index] = null;
+        setSelectedTiles(newSelectedTiles);
+      }
     }
   };
 
   const handleTileClick = (index: number) => {
     const tile = scrambledTiles[index];
-    setSelectedTiles([...selectedTiles, tile]);
-    setScrambledTiles(scrambledTiles.filter((_, i) => i !== index));
+    setSelectedTiles((prev) => {
+      const newSelected = [...prev];
+      const emptyIndex = newSelected.findIndex((t) => t === null);
+      if (emptyIndex !== -1) {
+        newSelected[emptyIndex] = tile;
+      }
+      return newSelected;
+    });
+    setScrambledTiles((prev) => {
+      const newScrambled: (string | null)[] = [...prev];
+      newScrambled[index] = null;
+      return newScrambled;
+    });
+    setScrambledTilePositions((prev) => {
+      const newPositions = [...prev];
+      newPositions[index] = null;
+      return newPositions;
+    });
   };
 
   return (
