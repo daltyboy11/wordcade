@@ -24,9 +24,33 @@ export default function WordScramble() {
     answers,
   } = useGame('word-scramble');
 
+  const scrambleWord = (word: string): string[] => {
+    if (word.length < 2) {
+      return word.split('');
+    }
+
+    let scrambled = word.split('');
+
+    // Helper function to shuffle an array
+    const shuffleArray = (array: string[]): string[] => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    };
+
+    // Shuffle until the scrambled word is different from the original word
+    do {
+      scrambled = shuffleArray(word.split(''));
+    } while (scrambled.join('') === word);
+
+    return scrambled;
+  };
+
   useEffect(() => {
     if (data && data.length > 0) {
-      const scrambled = data[currentQuestion].scrambled.split('');
+      const scrambled = scrambleWord(data[currentQuestion].word);
       setScrambledTiles(scrambled);
       setScrambledTilePositions(scrambled.map((tile) => tile));
       setSelectedTiles(Array(scrambled.length).fill(null));
@@ -40,10 +64,13 @@ export default function WordScramble() {
       data[currentQuestion].word.length
     ) {
       const formedWord = selectedTiles.join('');
-      answerQuestion(formedWord);
+      answerQuestion({
+        guess: formedWord,
+        scrambled: scrambledTiles.join(''),
+      });
       setSelectedTiles(Array(data[currentQuestion].word.length).fill(null));
       if (currentQuestion < data.length - 1) {
-        const nextScrambled = data[currentQuestion + 1].scrambled.split('');
+        const nextScrambled = scrambleWord(data[currentQuestion + 1].word);
         setScrambledTiles(nextScrambled);
         setScrambledTilePositions(nextScrambled.map((tile) => tile));
       }
@@ -162,18 +189,19 @@ export default function WordScramble() {
             <h2 className="text-2xl mb-4 text-left">Your Answers:</h2>
             <ul className="list-disc list-inside text-left">
               {answers.map(({ isCorrect, rawAnswer }, index) => {
+                const { guess, scrambled } = rawAnswer;
                 const question = data[index];
                 const correctAnswer = question.word;
                 return (
                   <li key={index} className="mb-2 italic">
-                    {question.scrambled}{' '}
+                    {scrambled}{' '}
                     {isCorrect ? (
                       <span className="text-green-500 not-italic">
-                        <b>+1</b> {rawAnswer}
+                        <b>+1</b> {guess}
                       </span>
                     ) : (
                       <span className="text-orange-300 not-italic">
-                        <b>-1</b> {rawAnswer} (Correct: {correctAnswer})
+                        <b>-1</b> {guess} (Correct: {correctAnswer})
                       </span>
                     )}
                   </li>

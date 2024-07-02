@@ -33,8 +33,10 @@ const validators = {
     question.answer === answerIndex,
   'who-said-it': (question: WhoSaidItQuestion, answerIndex: number): boolean =>
     question.answer === answerIndex,
-  'word-scramble': (question: WordScrambleQuestion, answer: string): boolean =>
-    question.word === answer,
+  'word-scramble': (
+    question: WordScrambleQuestion,
+    answer: { guess: string; scrambled: string }
+  ): boolean => question.word === answer.guess,
 };
 
 function getValidator<T extends Game>(

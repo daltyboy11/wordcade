@@ -44,7 +44,7 @@ Example
 Given a word whose letters have been scrambled out of order, the user has to determine what the underlying word is and then unscramble the letter
 Example
   FIDITEONIN
-  Answer: DEFINITIONo
+  Answer: DEFINITION
 
 The format of all games is answering as many questions as you can in 30 seconds. A correct answer adds one point and an incorrect answer deducts one point.
 
@@ -227,15 +227,13 @@ Elements in the array conform to this schema
 \`\`\`
 {
   word: string;
-  scrambled: string;
 };
 \`\`\`
 
 An example
 \`\`\`
 {
-  "word": "LANGUAGE",
-  "scrambled": "GAULNGAE"
+  "word": "LANGUAGE"
 }
 \`\`\`
 
