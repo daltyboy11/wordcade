@@ -2,9 +2,9 @@
 
 const games = [
   {
-    href: '/games/synonyms',
-    title: 'Synonyms',
-    description: 'Choose the correct synonym and score points!',
+    href: '/games/word-scramble',
+    title: 'Word Scramble',
+    description: 'Unscramble the word!',
   },
   {
     href: '/games/fake-words',
@@ -12,24 +12,24 @@ const games = [
     description: 'Determine if the word is real or fake!',
   },
   {
+    href: '/games/synonyms',
+    title: 'Synonyms',
+    description: 'Choose the correct synonym and score points!',
+  },
+  {
     href: '/games/antonyms',
     title: 'Antonyms',
     description: 'Choose the correct antonym and score points!',
   },
   {
-    href: '/games/analogies',
-    title: 'Analogies',
-    description: 'Solve the analogy and score points!',
-  },
-  {
-    href: '/games/word-scramble',
-    title: 'Word Scramble',
-    description: 'Unscramble the word!',
-  },
-  {
     href: '/games/who-said-it',
     title: 'Who Said It?',
     description: 'Identify the quote author!',
+  },
+  {
+    href: '/games/analogies',
+    title: 'Analogies',
+    description: 'Solve the analogy and score points!',
   },
 ];
 
