@@ -12,7 +12,7 @@ type GameState = 'pregame' | 'loading-ingame' | 'ingame' | 'postgame';
 interface UseGameReturnType<T extends Game> {
   currentState: GameState;
   previousState?: GameState;
-  data?: GameQuestion[T][];
+  questions?: GameQuestion[T][];
   fetchData: () => Promise<void>;
   startGame: () => void;
   answerQuestion: (answer: any) => void;
@@ -53,7 +53,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
     prev?: GameState;
     current: GameState;
   }>({ current: 'pregame' });
-  const [data, setData] = useState<GameQuestion[T][]>([]);
+  const [questions, setQuestions] = useState<GameQuestion[T][]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
@@ -85,7 +85,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
       }
 
       const { gameData } = await response.json();
-      setData(gameData);
+      setQuestions(gameData);
       setCurrentQuestion(0);
       setScore(0);
       setTimeLeft(30);
@@ -112,13 +112,13 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
   const answerQuestion = useCallback(
     (answer: any) => {
       const validator = getValidator(gameType);
-      const isCorrect = validator(data[currentQuestion], answer);
+      const isCorrect = validator(questions[currentQuestion], answer);
       setAnswers((prevAnswers) => [
         ...prevAnswers,
         { isCorrect, rawAnswer: answer },
       ]);
       setScore((prevScore) => (isCorrect ? prevScore + 1 : prevScore - 1));
-      if (currentQuestion < data.length - 1) {
+      if (currentQuestion < questions.length - 1) {
         setCurrentQuestion((prevQuestion) => prevQuestion + 1);
       } else {
         setPageState((prevState) => ({
@@ -127,7 +127,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
         }));
       }
     },
-    [currentQuestion, data, gameType]
+    [currentQuestion, questions, gameType]
   );
 
   useEffect(() => {
@@ -149,7 +149,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
   return {
     currentState: pageState.current,
     previousState: pageState.prev,
-    data,
+    questions,
     fetchData,
     startGame,
     answerQuestion,

@@ -15,7 +15,7 @@ export default function WordScramble() {
   const {
     currentState,
     previousState,
-    data,
+    questions,
     startGame,
     answerQuestion,
     timeLeft,
@@ -49,33 +49,35 @@ export default function WordScramble() {
   };
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      const scrambled = scrambleWord(data[currentQuestion].word);
+    if (questions && questions.length > 0) {
+      const scrambled = scrambleWord(questions[currentQuestion].word);
       setScrambledTiles(scrambled);
       setScrambledTilePositions(scrambled.map((tile) => tile));
       setSelectedTiles(Array(scrambled.length).fill(null));
     }
-  }, [data, currentQuestion]);
+  }, [questions, currentQuestion]);
 
   useEffect(() => {
-    if (!data || data.length === 0) return;
+    if (!questions || questions.length === 0) return;
     if (
       selectedTiles.filter((tile) => tile !== null).length ===
-      data[currentQuestion].word.length
+      questions[currentQuestion].word.length
     ) {
       const formedWord = selectedTiles.join('');
       answerQuestion({
         guess: formedWord,
         scrambled: scrambledTiles.join(''),
       });
-      setSelectedTiles(Array(data[currentQuestion].word.length).fill(null));
-      if (currentQuestion < data.length - 1) {
-        const nextScrambled = scrambleWord(data[currentQuestion + 1].word);
+      setSelectedTiles(
+        Array(questions[currentQuestion].word.length).fill(null)
+      );
+      if (currentQuestion < questions.length - 1) {
+        const nextScrambled = scrambleWord(questions[currentQuestion + 1].word);
         setScrambledTiles(nextScrambled);
         setScrambledTilePositions(nextScrambled.map((tile) => tile));
       }
     }
-  }, [selectedTiles, data, currentQuestion]);
+  }, [selectedTiles, questions, currentQuestion]);
 
   const handleSlotClick = (index: number) => {
     const tile = selectedTiles[index];
@@ -148,13 +150,13 @@ export default function WordScramble() {
         </div>
       )}
 
-      {currentState === 'ingame' && data && (
+      {currentState === 'ingame' && questions && (
         <div className="text-center">
           <div className="mb-4">
             <h1 className="text-4xl font-bold">{timeLeft}</h1>
           </div>
           <div className="flex justify-center mb-6 w-full flex-nowrap">
-            {Array(data[currentQuestion].word.length)
+            {Array(questions[currentQuestion].word.length)
               .fill(null)
               .map((_, index) => (
                 <div
@@ -182,18 +184,18 @@ export default function WordScramble() {
 
       {(currentState === 'postgame' ||
         (currentState === 'loading-ingame' && previousState === 'postgame')) &&
-        data && (
+        questions && (
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Game Over</h1>
             <p className="text-xl text-left">Your score: {score}</p>
             <p className="text-xl mb-2 text-left">
-              Your answered {answers.length}/{data.length} questions
+              Your answered {answers.length}/{questions.length} questions
             </p>
             <h2 className="text-2xl mb-4 text-left">Your Answers:</h2>
             <ul className="list-disc list-inside text-left">
               {answers.map(({ isCorrect, rawAnswer }, index) => {
                 const { guess, scrambled } = rawAnswer;
-                const question = data[index];
+                const question = questions[index];
                 const correctAnswer = question.word;
                 return (
                   <li key={index} className="mb-2 italic">

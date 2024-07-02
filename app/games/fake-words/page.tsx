@@ -9,7 +9,7 @@ export default function FakeWords() {
   const {
     currentState,
     previousState,
-    data,
+    questions,
     startGame,
     answerQuestion,
     timeLeft,
@@ -43,16 +43,16 @@ export default function FakeWords() {
         </div>
       )}
 
-      {currentState === 'ingame' && data && (
+      {currentState === 'ingame' && questions && (
         <div className="text-center" style={{ minWidth: '300px' }}>
           <div className="mb-4">
             <h1 className="text-4xl font-bold" style={{ minWidth: '200px' }}>
               {timeLeft}
             </h1>
           </div>
-          <h2 className="text-2xl mb-6">{data[currentQuestion].word}</h2>
+          <h2 className="text-2xl mb-6">{questions[currentQuestion].word}</h2>
           <p className="text-xl mb-6 max-w-xl mx-auto h-24">
-            {data[currentQuestion].definition}
+            {questions[currentQuestion].definition}
           </p>
           <div className="flex justify-center gap-4">
             <button
@@ -73,17 +73,17 @@ export default function FakeWords() {
 
       {(currentState === 'postgame' ||
         (currentState === 'loading-ingame' && previousState === 'postgame')) &&
-        data && (
+        questions && (
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Game Over</h1>
             <p className="text-xl text-left">Your score: {score}</p>
             <p className="text-xl mb-2 text-left">
-              Your answered {answers.length}/{data.length} questions
+              Your answered {answers.length}/{questions.length} questions
             </p>
             <h2 className="text-2xl mb-4 text-left">Your Answers:</h2>
             <ul className="list-disc list-inside text-left">
               {answers.map(({ isCorrect, rawAnswer }, index) => {
-                const question = data[index];
+                const question = questions[index];
                 return (
                   <li key={index} className="mb-2">
                     {question.word}:{' '}
