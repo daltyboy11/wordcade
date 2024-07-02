@@ -168,7 +168,7 @@ export default function WordScramble() {
                 </div>
               ))}
           </div>
-          <div className="flex gap-4 justify-center min-h-20 flex-wrap">
+          <div className="flex gap-1 justify-center min-h-20 flex-wrap">
             {scrambledTiles.map((tile, index) => (
               <button
                 key={index}
