@@ -185,7 +185,10 @@ export default function WordScramble() {
         data && (
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Game Over</h1>
-            <p className="text-xl mb-8">Your score: {score}</p>
+            <p className="text-xl text-left">Your score: {score}</p>
+            <p className="text-xl mb-2 text-left">
+              Your answered {answers.length}/{data.length} questions
+            </p>
             <h2 className="text-2xl mb-4 text-left">Your Answers:</h2>
             <ul className="list-disc list-inside text-left">
               {answers.map(({ isCorrect, rawAnswer }, index) => {
