@@ -153,25 +153,25 @@ export default function WordScramble() {
           <div className="mb-4">
             <h1 className="text-4xl font-bold">{timeLeft}</h1>
           </div>
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-6 w-full flex-nowrap">
             {Array(data[currentQuestion].word.length)
               .fill(null)
               .map((_, index) => (
                 <div
                   key={index}
                   onClick={() => handleSlotClick(index)}
-                  className="w-10 h-10 border-2 border-white mx-1 flex items-center justify-center bg-purple-700 rounded-lg cursor-pointer"
+                  className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 border-2 border-white mx-1 flex items-center justify-center bg-purple-700 rounded-lg cursor-pointer"
                 >
                   {selectedTiles[index] || ''}
                 </div>
               ))}
           </div>
-          <div className="flex gap-4 justify-center min-h-20">
+          <div className="flex gap-4 justify-center min-h-20 flex-wrap">
             {scrambledTiles.map((tile, index) => (
               <button
                 key={index}
                 onClick={() => handleTileClick(index)}
-                className="w-10 h-10 bg-purple-700 rounded-lg hover:bg-purple-800 flex items-center justify-center"
+                className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-purple-700 rounded-lg hover:bg-purple-800 flex items-center justify-center"
               >
                 {tile}
               </button>
