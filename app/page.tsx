@@ -43,7 +43,7 @@ export default function Home() {
         every time.
       </p>
 
-      <div className="grid gap-8 text-center lg:grid-cols-2 lg:text-left">
+      <div className="grid gap-8 text-center lg:grid-cols-2 lg:text-left mb-6">
         {games.map((game, index) => (
           <a
             key={index}
