@@ -14,6 +14,7 @@ import {
   whoSaidItPrompt,
   wordScramblePrompt,
 } from './prompts';
+import { MessageParam } from '@anthropic-ai/sdk/resources/messages.mjs';
 
 export type Game =
   | 'analogies'
@@ -33,11 +34,14 @@ export type GameQuestion = {
 };
 
 interface GameDataFetcher {
-  fetch<T extends Game>(game: T): Promise<GameQuestion[T][]>;
+  fetch<T extends Game>(game: T, history: string[]): Promise<GameQuestion[T][]>;
 }
 
 class SampleDataFetcher implements GameDataFetcher {
-  async fetch<T extends Game>(game: T): Promise<GameQuestion[T][]> {
+  async fetch<T extends Game>(
+    game: T,
+    history: string[]
+  ): Promise<GameQuestion[T][]> {
     // Simulate delay of 5 seconds... that's how long Claude takes :'()
     await new Promise((resolve) => setTimeout(resolve, 5000));
 
@@ -72,13 +76,34 @@ const maperoni: Record<Game, string> = {
 class ClaudeDataFetcher implements GameDataFetcher {
   constructor(private readonly api: Anthropic) {}
 
-  async fetch<T extends Game>(game: T): Promise<GameQuestion[T][]> {
+  async fetch<T extends Game>(
+    game: T,
+    history: string[]
+  ): Promise<GameQuestion[T][]> {
+    // Interleave the user prompts with the history
+    const messages = history.flatMap((claudeResponse) => {
+      const userMessage: MessageParam = {
+        role: 'user',
+        content: maperoni[game],
+      };
+      const claudeMessage: MessageParam = {
+        role: 'assistant',
+        content: claudeResponse,
+      };
+      return [userMessage, claudeMessage];
+    });
+    messages.push({
+      role: 'user',
+      content: maperoni[game],
+    });
+    console.log('Sending messages to Claude');
+    console.log({ messages });
     const message = await this.api.messages.create({
       max_tokens: 4096,
       model: 'claude-3-haiku-20240307',
       temperature: 1.0,
       system: systemPrompt,
-      messages: [{ role: 'user', content: maperoni[game] }],
+      messages,
     });
     if (message.content.length > 0 && message.content[0].type === 'text') {
       // console.log({ claudeResponseText: message.content[0].text })

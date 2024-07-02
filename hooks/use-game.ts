@@ -59,6 +59,10 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
     { isCorrect: boolean; rawAnswer: any }[]
   >([]);
 
+  // Maintain a history of the conversation, to be passed to the messages API on game replays,
+  // in the hopes of Claude being less repetitive in his responses.
+  const [history, setHistory] = useState<string[]>([]);
+
   const fetchData = useCallback(async () => {
     setPageState((prevState) => ({
       prev: prevState.current,
@@ -71,7 +75,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ game: gameType }),
+        body: JSON.stringify({ game: gameType, history }),
       });
 
       if (!response.ok) {
@@ -84,6 +88,8 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
       setScore(0);
       setTimeLeft(30);
       setAnswers([]);
+      const newHistory = [...history, JSON.stringify(gameData)];
+      setHistory(newHistory);
       setPageState((prevState) => ({
         prev: prevState.current,
         current: 'ingame',
@@ -95,7 +101,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
         current: 'pregame',
       }));
     }
-  }, [gameType]);
+  }, [gameType, history]);
 
   const startGame = useCallback(() => {
     fetchData();

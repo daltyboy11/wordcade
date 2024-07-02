@@ -54,7 +54,7 @@ the caller can directly parse it into a javascript object. You must take extra c
 and the fake words must actually be fake. In general be creative, make it fun and interesting, and the data you produce should be progressively more difficult. It makes for a funner game if the questions start easy
 and become harder as your progress.
 
-The exact data schema will be specified unambiguously in the prompts
+The exact data schema will be specified unambiguously in the prompts.
 `;
 
 export const analogiesPrompt = `
@@ -101,6 +101,8 @@ An example:
 \`\`\`
 
 The correct option should obviously fit the relationship, and the incorrect options should not. Don't make the choices ambiguous.
+
+Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 `;
 
 export const antonymsPrompt = `
@@ -126,6 +128,8 @@ An example
 \`\`\`
 
 Make the elements in the array progressively more difficult, starting with an easy difficulty and ending with a hard difficulty. Hard difficulty should mean that the word is complex or lesser known, or that the antonym is complex or lesser known.
+
+Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 `;
 
 export const fakeWordsPrompt = `
@@ -158,6 +162,8 @@ Two examples, one real and one fake:
 There should be a mix of real and fake words in your response, but it doesn't have to be a 50/50 split. Also, the words should be
 sufficiently obscure, and the definitions for the fake words sufficiently plausible, such that it's not trivial to tell whether the
 word is real or fake.
+
+Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 `;
 
 export const synonymsPrompt = `
@@ -183,6 +189,8 @@ An example
 \`\`\`
 
 Make the elements in the array progressively more difficult, starting with an easy difficulty and ending with an intermediate / moderate difficulty.
+
+Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 `;
 
 export const whoSaidItPrompt = `
@@ -207,6 +215,8 @@ An example
 }
 
 Take extra care to not hallucinate a quote, or misattribute a quote. Before generating an arraya element you must be confident that the quote is real, and you know who the proper author is.
+
+Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 \`\`\`
 `;
 
@@ -230,4 +240,6 @@ An example
 \`\`\`
 
 Start easy with words that are only 4 letters long and progress to a word with 10 or more letterts for the final one.
+
+Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 `;
