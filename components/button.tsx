@@ -18,7 +18,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={isLoading}
       style={{ minWidth: '200px' }}
-      className="mt-8 px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+      className="mt-8 px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
     >
       {isLoading ? (
         <div className="flex items-center">

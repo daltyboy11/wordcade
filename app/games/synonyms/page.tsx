@@ -56,7 +56,7 @@ export default function Synonyms() {
               <button
                 key={index}
                 onClick={() => answerQuestion(index)}
-                className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800"
+                className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
               >
                 {option}
               </button>

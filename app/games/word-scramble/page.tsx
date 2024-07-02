@@ -168,12 +168,12 @@ export default function WordScramble() {
                 </div>
               ))}
           </div>
-          <div className="flex gap-1 justify-center min-h-20 flex-wrap">
+          <div className="flex gap-2 justify-center min-h-20 flex-wrap">
             {scrambledTiles.map((tile, index) => (
               <button
                 key={index}
                 onClick={() => handleTileClick(index)}
-                className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-purple-700 rounded-lg hover:bg-purple-800 flex items-center justify-center"
+                className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-purple-700 rounded-lg active:bg-purple-800 flex items-center justify-center"
               >
                 {tile}
               </button>

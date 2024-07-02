@@ -57,13 +57,13 @@ export default function FakeWords() {
           <div className="flex justify-center gap-4">
             <button
               onClick={() => answerQuestion(true)}
-              className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800 w-32"
+              className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800 w-32"
             >
               Real
             </button>
             <button
               onClick={() => answerQuestion(false)}
-              className="px-6 py-3 bg-purple-700 rounded-lg hover:bg-purple-800 w-32"
+              className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800 w-32"
             >
               Fake
             </button>
