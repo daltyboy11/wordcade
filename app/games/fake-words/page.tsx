@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
 import { useRouter } from 'next/navigation';
+import useSound from 'use-sound';
 
 export default function FakeWords() {
   const router = useRouter();
@@ -16,7 +18,18 @@ export default function FakeWords() {
     score,
     currentQuestion,
     answers,
+    playCorrectSound,
+    playWrongSound,
   } = useGame('fake-words');
+
+  const handleAnswer = (isReal: boolean) => {
+    const isCorrect = answerQuestion(isReal);
+    if (isCorrect) {
+      playCorrectSound();
+    } else {
+      playWrongSound();
+    }
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
@@ -56,13 +69,13 @@ export default function FakeWords() {
           </p>
           <div className="flex justify-center gap-4">
             <button
-              onClick={() => answerQuestion(true)}
+              onClick={() => handleAnswer(true)}
               className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800 w-32"
             >
               Real
             </button>
             <button
-              onClick={() => answerQuestion(false)}
+              onClick={() => handleAnswer(false)}
               className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800 w-32"
             >
               Fake

@@ -18,11 +18,22 @@ export default function WordScramble() {
     questions,
     startGame,
     answerQuestion,
+    playCorrectSound,
+    playWrongSound,
     timeLeft,
     score,
     currentQuestion,
     answers,
   } = useGame('word-scramble');
+
+  const handleAnswer = (answer: { guess: string; scrambled: string }) => {
+    const isCorrect = answerQuestion(answer);
+    if (isCorrect) {
+      playCorrectSound();
+    } else {
+      playWrongSound();
+    }
+  };
 
   const scrambleWord = (word: string): string[] => {
     if (word.length < 2) {
@@ -64,10 +75,11 @@ export default function WordScramble() {
       questions[currentQuestion].word.length
     ) {
       const formedWord = selectedTiles.join('');
-      answerQuestion({
+      const answer = {
         guess: formedWord,
         scrambled: scrambledTiles.join(''),
-      });
+      };
+      handleAnswer(answer);
       setSelectedTiles(
         Array(questions[currentQuestion].word.length).fill(null)
       );

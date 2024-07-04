@@ -6,6 +6,7 @@ import { FakeWordQuestion } from '@/lib/fake-words';
 import { SynonymQuestion } from '@/lib/synonyms';
 import { WhoSaidItQuestion } from '@/lib/who-said-it';
 import { WordScrambleQuestion } from '@/lib/word-scramble';
+import useSound from 'use-sound';
 
 type GameState = 'pregame' | 'loading-ingame' | 'ingame' | 'postgame';
 
@@ -20,6 +21,8 @@ interface UseGameReturnType<T extends Game> {
   score: number;
   currentQuestion: number;
   answers: { isCorrect: boolean; rawAnswer: any }[];
+  playCorrectSound: () => void;
+  playWrongSound: () => void;
 }
 
 const validators = {
@@ -60,6 +63,8 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
   const [answers, setAnswers] = useState<
     { isCorrect: boolean; rawAnswer: any }[]
   >([]);
+  const [_playCorrectSound] = useSound('/sounds/correct-answer-tone.wav');
+  const [_playWrongSound] = useSound('/sounds/wrong-answer-tone.wav');
 
   // Maintain a history of the conversation, to be passed to the messages API on game replays,
   // in the hopes of Claude being less repetitive in his responses.
@@ -126,7 +131,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
           current: 'postgame',
         }));
       }
-      return isCorrect
+      return isCorrect;
     },
     [currentQuestion, questions, gameType]
   );
@@ -158,5 +163,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
     score,
     currentQuestion,
     answers,
+    playCorrectSound: () => _playCorrectSound(),
+    playWrongSound: () => _playWrongSound(),
   };
 }

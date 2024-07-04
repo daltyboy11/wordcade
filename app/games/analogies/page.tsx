@@ -16,7 +16,18 @@ export default function Analogies() {
     score,
     currentQuestion,
     answers,
+    playCorrectSound,
+    playWrongSound,
   } = useGame('analogies');
+
+  const handleAnswer = (index: number) => {
+    const isCorrect = answerQuestion(index);
+    if (isCorrect) {
+      playCorrectSound();
+    } else {
+      playWrongSound();
+    }
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
@@ -59,7 +70,7 @@ export default function Analogies() {
             {questions[currentQuestion].options.map((option, index) => (
               <button
                 key={index}
-                onClick={() => answerQuestion(index)}
+                onClick={() => handleAnswer(index)}
                 className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
               >
                 {option.optionText}
