@@ -15,7 +15,7 @@ interface UseGameReturnType<T extends Game> {
   questions?: GameQuestion[T][];
   fetchData: () => Promise<void>;
   startGame: () => void;
-  answerQuestion: (answer: any) => void;
+  answerQuestion: (answer: any) => boolean;
   timeLeft: number;
   score: number;
   currentQuestion: number;
@@ -126,6 +126,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
           current: 'postgame',
         }));
       }
+      return isCorrect
     },
     [currentQuestion, questions, gameType]
   );
