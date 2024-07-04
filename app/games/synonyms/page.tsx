@@ -1,11 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
 import { useRouter } from 'next/navigation';
 
 export default function Synonyms() {
   const router = useRouter();
+  const [intermediateState, setIntermediateState] = useState<
+    'correct' | 'incorrect' | null
+  >(null);
+  const [transitioning, setTransitioning] = useState(false);
+
   const {
     currentState,
     previousState,
@@ -22,11 +28,19 @@ export default function Synonyms() {
 
   const handleAnswer = (index: number) => {
     const isCorrect = answerQuestion(index);
+    setIntermediateState(isCorrect ? 'correct' : 'incorrect');
     if (isCorrect) {
       playCorrectSound();
     } else {
       playWrongSound();
     }
+    setTimeout(() => {
+      setIntermediateState(null);
+      setTransitioning(true);
+      setTimeout(() => {
+        setTransitioning(false);
+      }, 150); // Duration of the transition
+    }, 400); // Duration of the intermediate state
   };
 
   return (
@@ -54,8 +68,11 @@ export default function Synonyms() {
         </div>
       )}
 
-      {currentState === 'ingame' && questions && (
-        <div className="text-center" style={{ minWidth: '300px' }}>
+      {currentState === 'ingame' && questions && !intermediateState && (
+        <div
+          className={`text-center transition-opacity duration-500 ${transitioning ? 'opacity-0' : 'opacity-100'}`}
+          style={{ minWidth: '300px' }}
+        >
           <div className="mb-4">
             <h1 className="text-4xl font-bold" style={{ minWidth: '200px' }}>
               {timeLeft}
@@ -76,16 +93,26 @@ export default function Synonyms() {
         </div>
       )}
 
+      {intermediateState && (
+        <div className="text-center">
+          <h1
+            className={`text-4xl font-bold mb-4 ${intermediateState === 'correct' ? 'text-green-500' : 'text-red-500'}`}
+          >
+            {intermediateState === 'correct' ? 'Correct' : 'Incorrect'}
+          </h1>
+        </div>
+      )}
+
       {(currentState === 'postgame' ||
         (currentState === 'loading-ingame' && previousState === 'postgame')) &&
         questions && (
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Game Over</h1>
-            <p className="text-xl text-left">Your score: {score}</p>
+            <p className="text-xl text-left">Score: {score}</p>
             <p className="text-xl mb-2 text-left">
-              Your answered {answers.length}/{questions.length} questions
+              You answered {answers.length}/{questions.length} questions
             </p>
-            <h2 className="text-2xl mb-4 text-left">Your Answers:</h2>
+            <h2 className="text-2xl mb-4 text-left">Answers:</h2>
             <ul className="list-disc list-inside text-left">
               {answers.map(({ isCorrect, rawAnswer }, index) => {
                 const question = questions[index];
