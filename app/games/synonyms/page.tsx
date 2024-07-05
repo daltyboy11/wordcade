@@ -10,7 +10,6 @@ export default function Synonyms() {
   const [intermediateState, setIntermediateState] = useState<
     'correct' | 'incorrect' | null
   >(null);
-  const [transitioning, setTransitioning] = useState(false);
 
   const {
     currentState,
@@ -36,10 +35,6 @@ export default function Synonyms() {
     }
     setTimeout(() => {
       setIntermediateState(null);
-      setTransitioning(true);
-      setTimeout(() => {
-        setTransitioning(false);
-      }, 150); // Duration of the transition
     }, 400); // Duration of the intermediate state
   };
 
@@ -68,38 +63,44 @@ export default function Synonyms() {
         </div>
       )}
 
-      {currentState === 'ingame' && questions && !intermediateState && (
-        <div
-          className={`text-center transition-opacity duration-500 ${transitioning ? 'opacity-0' : 'opacity-100'}`}
-          style={{ minWidth: '300px' }}
-        >
+      {currentState === 'ingame' && questions && (
+        <div className="text-center" style={{ minWidth: '300px' }}>
           <div className="mb-4">
             <h1 className="text-4xl font-bold" style={{ minWidth: '200px' }}>
               {timeLeft}
             </h1>
           </div>
-          <h2 className="text-2xl mb-6">{questions[currentQuestion].word}</h2>
-          <div className="grid gap-4">
-            {questions[currentQuestion].options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswer(index)}
-                className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {intermediateState && (
-        <div className="text-center">
-          <h1
-            className={`text-4xl font-bold mb-4 ${intermediateState === 'correct' ? 'text-green-500' : 'text-red-500'}`}
+          <h2
+            className={`text-2xl mb-6 ${intermediateState === 'correct' ? 'text-green-500' : intermediateState === 'incorrect' ? 'text-orange-300' : ''}`}
           >
-            {intermediateState === 'correct' ? 'Correct' : 'Incorrect'}
-          </h1>
+            {intermediateState
+              ? intermediateState === 'correct'
+                ? 'Correct'
+                : 'Incorrect'
+              : questions[currentQuestion].word}
+          </h2>
+          <div className="grid gap-4">
+            {intermediateState === null
+              ? questions[currentQuestion].options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswer(index)}
+                    className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
+                  >
+                    {option}
+                  </button>
+                ))
+              : questions[currentQuestion - 1].options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswer(index)}
+                    className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
+                    disabled={true}
+                  >
+                    {option}
+                  </button>
+                ))}
+          </div>
         </div>
       )}
 
