@@ -1,11 +1,16 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
 import { useRouter } from 'next/navigation';
 
 export default function Antonyms() {
   const router = useRouter();
+  const [intermediateState, setIntermediateState] = useState<
+    'correct' | 'incorrect' | null
+  >(null);
+
   const {
     currentState,
     previousState,
@@ -22,11 +27,15 @@ export default function Antonyms() {
 
   const handleAnswer = (index: number) => {
     const isCorrect = answerQuestion(index);
+    setIntermediateState(isCorrect ? 'correct' : 'incorrect');
     if (isCorrect) {
       playCorrectSound();
     } else {
       playWrongSound();
     }
+    setTimeout(() => {
+      setIntermediateState(null);
+    }, 400); // Duration of the intermediate state
   };
 
   return (
@@ -61,17 +70,36 @@ export default function Antonyms() {
               {timeLeft}
             </h1>
           </div>
-          <h2 className="text-2xl mb-6">{questions[currentQuestion].word}</h2>
+          <h2
+            className={`text-2xl mb-6 ${intermediateState === 'correct' ? 'text-green-500' : intermediateState === 'incorrect' ? 'text-orange-300' : ''}`}
+          >
+            {intermediateState
+              ? intermediateState === 'correct'
+                ? 'Correct'
+                : 'Incorrect'
+              : questions[currentQuestion].word}
+          </h2>
           <div className="grid gap-4">
-            {questions[currentQuestion].options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswer(index)}
-                className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
-              >
-                {option}
-              </button>
-            ))}
+            {intermediateState === null
+              ? questions[currentQuestion].options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswer(index)}
+                    className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
+                  >
+                    {option}
+                  </button>
+                ))
+              : questions[currentQuestion - 1].options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswer(index)}
+                    className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
+                    disabled={true}
+                  >
+                    {option}
+                  </button>
+                ))}
           </div>
         </div>
       )}
