@@ -80,26 +80,17 @@ export default function Synonyms() {
               : questions[currentQuestion].word}
           </h2>
           <div className="grid gap-4">
-            {intermediateState === null
-              ? questions[currentQuestion].options.map((option, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleAnswer(index)}
-                    className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
-                  >
-                    {option}
-                  </button>
-                ))
-              : questions[currentQuestion - 1].options.map((option, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleAnswer(index)}
-                    className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
-                    disabled={true}
-                  >
-                    {option}
-                  </button>
-                ))}
+            {questions[
+              intermediateState ? currentQuestion - 1 : currentQuestion
+            ].options.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => handleAnswer(index)}
+                className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
+              >
+                {option}
+              </button>
+            ))}
           </div>
         </div>
       )}
