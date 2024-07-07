@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useGame } from '@/hooks/use-game';
 import { Button } from '@/components';
+import { useState } from 'react';
 
 export default function WhoSaidIt() {
   const router = useRouter();
@@ -19,14 +20,21 @@ export default function WhoSaidIt() {
     playCorrectSound,
     playWrongSound,
   } = useGame('who-said-it');
+  const [intermediateState, setIntermediateState] = useState<
+    'correct' | 'incorrect' | null
+  >(null);
 
   const handleAnswer = (index: number) => {
     const isCorrect = answerQuestion(index);
+    setIntermediateState(isCorrect ? 'correct' : 'incorrect');
     if (isCorrect) {
       playCorrectSound();
     } else {
       playWrongSound();
     }
+    setTimeout(() => {
+      setIntermediateState(null);
+    }, 400); // Duration of the intermediate state
   };
 
   return (
@@ -61,15 +69,24 @@ export default function WhoSaidIt() {
               {timeLeft}
             </h1>
           </div>
-          <p className="text-xl mb-6 max-w-xl mx-auto h-24 italic">
-            {questions[currentQuestion].quote}
+          <p
+            className={`text-xl mb-6 max-w-xl mx-auto h-24 italic ${intermediateState === 'correct' ? 'font-bold not-italic text-green-500' : intermediateState === 'incorrect' ? 'font-bold not-italic text-orange-300' : ''}`}
+          >
+            {intermediateState
+              ? intermediateState === 'correct'
+                ? 'Correct'
+                : 'Incorrect'
+              : `${questions[currentQuestion].quote}`}
           </p>
           <div className="flex flex-col items-center gap-4">
-            {questions[currentQuestion].options.map((option, index) => (
+            {questions[
+              intermediateState ? currentQuestion - 1 : currentQuestion
+            ].options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => handleAnswer(index)}
                 className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800 w-64"
+                disabled={!!intermediateState}
               >
                 {option}
               </button>
