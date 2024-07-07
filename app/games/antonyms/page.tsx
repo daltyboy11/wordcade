@@ -71,7 +71,7 @@ export default function Antonyms() {
             </h1>
           </div>
           <h2
-            className={`text-2xl mb-6 ${intermediateState === 'correct' ? 'text-green-500' : intermediateState === 'incorrect' ? 'text-orange-300' : ''}`}
+            className={`text-2xl mb-6 ${intermediateState === 'correct' ? 'font-bold text-green-500' : intermediateState === 'incorrect' ? 'font-bold text-orange-300' : ''}`}
           >
             {intermediateState
               ? intermediateState === 'correct'
@@ -87,6 +87,7 @@ export default function Antonyms() {
                 key={index}
                 onClick={() => handleAnswer(index)}
                 className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
+                disabled={!!intermediateState}
               >
                 {option}
               </button>
