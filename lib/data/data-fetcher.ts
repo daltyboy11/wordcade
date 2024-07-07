@@ -42,8 +42,8 @@ class SampleDataFetcher implements GameDataFetcher {
     game: T,
     history: string[]
   ): Promise<GameQuestion[T][]> {
-    // Simulate delay of 5 seconds... that's how long Claude takes :'()
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    // Add delay so it's more realistic (Claude can take up to 5 seconds to generate a game)
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     switch (game) {
       case 'analogies':

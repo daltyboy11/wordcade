@@ -3,6 +3,7 @@
 import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Analogies() {
   const router = useRouter();
@@ -19,14 +20,21 @@ export default function Analogies() {
     playCorrectSound,
     playWrongSound,
   } = useGame('analogies');
+  const [intermediateState, setIntermediateState] = useState<
+    'correct' | 'incorrect' | null
+  >(null);
 
   const handleAnswer = (index: number) => {
     const isCorrect = answerQuestion(index);
+    setIntermediateState(isCorrect ? 'correct' : 'incorrect');
     if (isCorrect) {
       playCorrectSound();
     } else {
       playWrongSound();
     }
+    setTimeout(() => {
+      setIntermediateState(null);
+    }, 400); // Duration of the intermediate state
   };
 
   return (
@@ -62,16 +70,24 @@ export default function Analogies() {
               {timeLeft}
             </h1>
           </div>
-          <h2 className="text-2xl mb-6">
-            {questions[currentQuestion].prompt.A} ={'> '}
-            {questions[currentQuestion].prompt.B}
+          <h2
+            className={`text-2xl mb-6 ${intermediateState === 'correct' ? 'font-bold text-green-500' : intermediateState === 'incorrect' ? 'font-bold text-orange-300' : ''}`}
+          >
+            {intermediateState
+              ? intermediateState === 'correct'
+                ? 'Correct'
+                : 'Incorrect'
+              : `${questions[currentQuestion].prompt.A} => ${questions[currentQuestion].prompt.B}`}
           </h2>
           <div className="grid gap-4">
-            {questions[currentQuestion].options.map((option, index) => (
+            {questions[
+              intermediateState ? currentQuestion - 1 : currentQuestion
+            ].options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => handleAnswer(index)}
                 className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
+                disabled={!!intermediateState}
               >
                 {option.optionText}
               </button>
