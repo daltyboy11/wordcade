@@ -61,11 +61,13 @@ By offloading much of the details and context to the system prompt, the game pro
 While experimenting, I found that reminding Claude to keep the data unique and interesting improved task output. An example reminder in the fake-words prompt:
 
 ```
-Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
+Avoid recycling words that you used in previous prompts for this minigame.
+Your goal is to make every game unique, fun, and interesting.
 ```
 
 Sometimes it was helpful to insert game-specific requests in a prompt. For word scramble, the difficulty scale of Claude's responses improved when I added this to the prompt:
 
 ```
-Start easy with words that are only 4 letters long and progress to a word with 10 or more letters for the final one.
+Start easy with words that are only 4 letters long and progress
+to a word with 10 or more letters for the final one.
 ```
