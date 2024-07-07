@@ -25,14 +25,21 @@ export default function WordScramble() {
     currentQuestion,
     answers,
   } = useGame('word-scramble');
+  const [intermediateState, setIntermediateState] = useState<
+    'correct' | 'incorrect' | null
+  >(null);
 
   const handleAnswer = (answer: { guess: string; scrambled: string }) => {
     const isCorrect = answerQuestion(answer);
+    setIntermediateState(isCorrect ? 'correct' : 'incorrect');
     if (isCorrect) {
       playCorrectSound();
     } else {
       playWrongSound();
     }
+    setTimeout(() => {
+      setIntermediateState(null);
+    }, 400); // Duration of the intermediate state
   };
 
   const scrambleWord = (word: string): string[] => {
@@ -168,17 +175,25 @@ export default function WordScramble() {
             <h1 className="text-4xl font-bold">{timeLeft}</h1>
           </div>
           <div className="flex justify-center mb-6 w-full flex-nowrap">
-            {Array(questions[currentQuestion].word.length)
-              .fill(null)
-              .map((_, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleSlotClick(index)}
-                  className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 border-2 border-white mx-1 flex items-center justify-center bg-purple-700 rounded-lg cursor-pointer"
-                >
-                  {selectedTiles[index] || ''}
-                </div>
-              ))}
+            {intermediateState ? (
+              <h2
+                className={`text-2xl mb-6 font-bold ${intermediateState === 'correct' ? 'text-green-500' : 'text-orange-300'}`}
+              >
+                {intermediateState === 'correct' ? 'Correct' : 'Incorrect'}
+              </h2>
+            ) : (
+              Array(questions[currentQuestion].word.length)
+                .fill(null)
+                .map((_, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleSlotClick(index)}
+                    className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 border-2 border-white mx-1 flex items-center justify-center bg-purple-700 rounded-lg cursor-pointer"
+                  >
+                    {selectedTiles[index] || ''}
+                  </div>
+                ))
+            )}
           </div>
           <div className="flex gap-2 justify-center min-h-20 flex-wrap">
             {scrambledTiles.map((tile, index) => (
@@ -186,8 +201,9 @@ export default function WordScramble() {
                 key={index}
                 onClick={() => handleTileClick(index)}
                 className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-purple-700 rounded-lg active:bg-purple-800 flex items-center justify-center"
+                disabled={!!intermediateState}
               >
-                {tile}
+                {intermediateState ? '' : tile}
               </button>
             ))}
           </div>
