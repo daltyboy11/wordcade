@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Button } from '@/components';
 import { useGame } from '@/hooks/use-game';
 import { useRouter } from 'next/navigation';
-import useSound from 'use-sound';
 
 export default function FakeWords() {
   const router = useRouter();
@@ -21,14 +20,21 @@ export default function FakeWords() {
     playCorrectSound,
     playWrongSound,
   } = useGame('fake-words');
+  const [intermediateState, setIntermediateState] = useState<
+    'correct' | 'incorrect' | null
+  >(null);
 
   const handleAnswer = (isReal: boolean) => {
     const isCorrect = answerQuestion(isReal);
+    setIntermediateState(isCorrect ? 'correct' : 'incorrect');
     if (isCorrect) {
       playCorrectSound();
     } else {
       playWrongSound();
     }
+    setTimeout(() => {
+      setIntermediateState(null);
+    }, 400); // Duration of the intermediate state
   };
 
   return (
@@ -63,20 +69,34 @@ export default function FakeWords() {
               {timeLeft}
             </h1>
           </div>
-          <h2 className="text-2xl mb-6">{questions[currentQuestion].word}</h2>
+          <h2
+            className={`text-2xl mb-6 ${intermediateState === 'correct' ? 'font-bold text-green-500' : intermediateState === 'incorrect' ? 'font-bold text-orange-300' : ''}`}
+          >
+            {intermediateState
+              ? intermediateState === 'correct'
+                ? 'Correct'
+                : 'Incorrect'
+              : questions[currentQuestion].word}
+          </h2>
           <p className="text-xl mb-6 max-w-xl mx-auto h-24">
-            {questions[currentQuestion].definition}
+            {
+              questions[
+                intermediateState ? currentQuestion - 1 : currentQuestion
+              ].definition
+            }
           </p>
           <div className="flex justify-center gap-4">
             <button
               onClick={() => handleAnswer(true)}
               className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800 w-32"
+              disabled={!!intermediateState}
             >
               Real
             </button>
             <button
               onClick={() => handleAnswer(false)}
               className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800 w-32"
+              disabled={!!intermediateState}
             >
               Fake
             </button>
