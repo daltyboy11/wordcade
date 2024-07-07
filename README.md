@@ -39,4 +39,4 @@ When a game is selected from the Home Page, the app will fetch the data for that
 
 The game begins as soon as Claude provides the game data. The user will play the game until they've answered all the questions or the thirty second timer finishes, whichever comes first.
 
-On the _Game Finished_ screen the user has the option to play again or return to the Home Page. If they return to the Home Page then the conversation history is cleared and they begin anew. If they play again, then the convesation history is retained. This helps Claude generate unique data for the next game and avoid any repeat questions or answers.
+On the _Game Finished_ screen the user has the option to play again or return to the Home Page. If they return to the Home Page then the conversation history is cleared and they begin anew. If they play again, then the conversation history is retained. This helps Claude generate unique data for the next game and avoid any repeat questions or answers.
