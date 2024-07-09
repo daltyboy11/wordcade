@@ -2,6 +2,8 @@
 
 Wordcade is a set of word-based minigames designed to test your English and vocabulary skills. The minigames are powered by Anthropic's LLM, [Claude](https://www.anthropic.com/claude). It uses Claude to generate data for each game instance, keeping the content fresh, fun, and unique every time you play.
 
+Watch the demo: https://www.youtube.com/watch?v=2rFpz3B9ysU
+
 # How To Play
 
 ## Hosted Version
