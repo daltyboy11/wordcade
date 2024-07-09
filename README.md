@@ -42,6 +42,8 @@ The lifecycle of a game is illustrated by the following diagram:
 
 4. **Game Conclusion:** On the _Game Finished_ screen, the user has the option to play again or return to the Home Page. If they return to the Home Page, the conversation history is cleared, and they can start a new game. If they choose to play again, the conversation history is retained, helping Claude generate unique data for the next game and avoiding repeat questions or answers.
 
+See [data-fetcher.ts](./lib/data/data-fetcher.ts) to see how Wordcade talks to the Anthropic API.
+
 ## Prompts
 
 The prompting strategy is a combination of a system prompt explaining the role of Claude as the data generator, and a user prompt for each game. My prompts were crafted based on Anthropic's [prompt engineering guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview). Prompts can be found at [prompts.ts](./lib/data/prompts.ts).
