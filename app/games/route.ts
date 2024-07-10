@@ -1,6 +1,9 @@
 import { Game, dataFetcher } from '@/lib/data/data-fetcher';
 import { NextRequest, NextResponse } from 'next/server';
 
+// Allow function to run for 30 seconds before timing out
+export const maxDuration = 30
+
 export async function POST(request: NextRequest) {
   let game: Game;
   let history: string[];
