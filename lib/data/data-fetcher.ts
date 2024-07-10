@@ -98,13 +98,16 @@ class ClaudeDataFetcher implements GameDataFetcher {
     });
     console.log('Sending messages to Claude');
     console.log({ messages });
-    const message = await this.api.messages.create({
-      max_tokens: 4096,
-      model: 'claude-3-5-sonnet-20240620',
-      temperature: 1.0,
-      system: systemPrompt,
-      messages,
-    });
+    const message = await this.api.messages.create(
+      {
+        max_tokens: 4096,
+        model: 'claude-3-5-sonnet-20240620',
+        temperature: 1.0,
+        system: systemPrompt,
+        messages,
+      },
+      { timeout: 30000 } // 30 second timeout. The default 10 seconds didn't seem to be enough
+    );
     if (message.content.length > 0 && message.content[0].type === 'text') {
       // console.log({ claudeResponseText: message.content[0].text })
       const data = JSON.parse(message.content[0].text);
