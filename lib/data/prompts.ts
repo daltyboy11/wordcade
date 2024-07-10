@@ -104,7 +104,7 @@ An example:
 \`\`\`
 
 Make sure there is only one right answer. One should not be able to argue convincingly that the incorrect options could fit the relationship.
-Also do not return data where the right answer is always the first option. You tend to do this if I don't specify otherwise...
+Take care to make sure the correct answer isn't always in the same position in the options array.
 
 Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 `;
@@ -132,6 +132,7 @@ An example
 \`\`\`
 
 Make the elements in the array progressively more difficult, starting with an easy difficulty and ending with a hard difficulty. Hard difficulty should mean that the word is complex or lesser known, or that the antonym is complex or lesser known.
+Take care to make sure the correct answer isn't always in the same position in the options array.
 
 Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 `;
@@ -193,6 +194,7 @@ An example
 \`\`\`
 
 Make the elements in the array progressively more difficult, starting with an easy difficulty and ending with an intermediate / moderate difficulty.
+Take care to make sure the correct answer isn't always in the same position in the options array.
 
 Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 `;
@@ -219,6 +221,7 @@ An example
 }
 
 Take extra care to not hallucinate a quote, or misattribute a quote. Before generating an array element you must be confident that the quote is real, and you know who the proper author is.
+Take care to make sure the correct answer isn't always in the same position in the options array.
 
 Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 \`\`\`
