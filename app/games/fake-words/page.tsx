@@ -122,11 +122,11 @@ export default function FakeWords() {
                     {question.word}:{' '}
                     {isCorrect ? (
                       <span className="text-green-500">
-                        <b>+1</b> {question.real ? 'Real' : 'Fake'}
+                        {question.real ? 'Real' : 'Fake'}
                       </span>
                     ) : (
                       <span className="text-orange-300">
-                        <b>-1</b> {rawAnswer ? 'Real' : 'Fake'} (Correct:{' '}
+                        {rawAnswer ? 'Real' : 'Fake'} (Correct:{' '}
                         {question.real ? 'Real' : 'Fake'})
                       </span>
                     )}

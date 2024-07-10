@@ -229,12 +229,10 @@ export default function WordScramble() {
                   <li key={index} className="mb-2 italic">
                     {scrambled}{' '}
                     {isCorrect ? (
-                      <span className="text-green-500 not-italic">
-                        <b>+1</b> {guess}
-                      </span>
+                      <span className="text-green-500 not-italic">{guess}</span>
                     ) : (
                       <span className="text-orange-300 not-italic">
-                        <b>-1</b> {guess} (Correct: {correctAnswer})
+                        {guess} (Correct: {correctAnswer})
                       </span>
                     )}
                   </li>

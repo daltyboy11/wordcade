@@ -122,7 +122,7 @@ export function useGame<T extends Game>(gameType: T): UseGameReturnType<T> {
         ...prevAnswers,
         { isCorrect, rawAnswer: answer },
       ]);
-      setScore((prevScore) => (isCorrect ? prevScore + 1 : prevScore - 1));
+      setScore((prevScore) => (isCorrect ? prevScore + 1 : prevScore));
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion((prevQuestion) => prevQuestion + 1);
       } else {

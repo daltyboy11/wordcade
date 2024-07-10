@@ -115,12 +115,10 @@ export default function Synonyms() {
                   <li key={index} className="mb-2">
                     {question.word}:{' '}
                     {isCorrect ? (
-                      <span className="text-green-500">
-                        <b>+1</b> {answer}
-                      </span>
+                      <span className="text-green-500">{answer}</span>
                     ) : (
                       <span className="text-orange-300">
-                        <b>-1</b> {answer} (Correct: {correctAnswer})
+                        {answer} (Correct: {correctAnswer})
                       </span>
                     )}
                   </li>
