@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components';
+import { Button, PreGameHeader } from '@/components';
 import { useGame } from '@/hooks/use-game';
 import { useRouter } from 'next/navigation';
 
@@ -48,19 +48,12 @@ export default function Antonyms() {
       </button>
       {(currentState === 'pregame' ||
         (currentState === 'loading-ingame' && previousState === 'pregame')) && (
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Antonyms</h1>
-          <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Find the antonym (opposite) for each word.
-          </p>
-          <Button
-            onClick={startGame}
-            isLoading={currentState === 'loading-ingame'}
-            loadingText="Claude is creating a game"
-          >
-            Start
-          </Button>
-        </div>
+        <PreGameHeader
+          title="Antonyms"
+          description="Find the antonym (opposite) for each word."
+          isLoading={currentState === 'loading-ingame'}
+          onClick={startGame}
+        />
       )}
 
       {currentState === 'ingame' && questions && (

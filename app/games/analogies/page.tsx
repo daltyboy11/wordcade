@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components';
+import { Button, PreGameHeader } from '@/components';
 import { useGame } from '@/hooks/use-game';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -47,20 +47,12 @@ export default function Analogies() {
       </button>
       {(currentState === 'pregame' ||
         (currentState === 'loading-ingame' && previousState === 'pregame')) && (
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Analogies</h1>
-          <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Determine the relationship between the pair of words and choose the
-            option that most closely matches that relationship.
-          </p>
-          <Button
-            onClick={startGame}
-            isLoading={currentState === 'loading-ingame'}
-            loadingText="Claude is creating a game"
-          >
-            Start
-          </Button>
-        </div>
+        <PreGameHeader
+          title="Analogies"
+          description="Determine the relationship between the pair of words and choose the option that most closely matches that relationship."
+          isLoading={currentState === 'loading-ingame'}
+          onClick={startGame}
+        />
       )}
 
       {currentState === 'ingame' && questions && (

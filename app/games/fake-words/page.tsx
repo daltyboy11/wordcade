@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components';
+import { Button, PreGameHeader } from '@/components';
 import { useGame } from '@/hooks/use-game';
 import { useRouter } from 'next/navigation';
 
@@ -47,19 +47,12 @@ export default function FakeWords() {
       </button>
       {(currentState === 'pregame' ||
         (currentState === 'loading-ingame' && previousState === 'pregame')) && (
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Fake Words</h1>
-          <p className="text-xl mb-8 max-w-xl mx-auto text-left">
-            Determine if the word is real or fake.
-          </p>
-          <Button
-            onClick={startGame}
-            isLoading={currentState === 'loading-ingame'}
-            loadingText="Claude is creating a game"
-          >
-            Start
-          </Button>
-        </div>
+        <PreGameHeader
+          title="Fake Words"
+          description="Determine if the word is real or fake."
+          isLoading={currentState === 'loading-ingame'}
+          onClick={startGame}
+        />
       )}
 
       {currentState === 'ingame' && questions && (
