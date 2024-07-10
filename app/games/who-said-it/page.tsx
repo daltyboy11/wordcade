@@ -70,7 +70,13 @@ export default function WhoSaidIt() {
             </h1>
           </div>
           <p
-            className={`text-xl mb-6 max-w-xl mx-auto h-24 italic ${intermediateState === 'correct' ? 'font-bold not-italic text-green-500' : intermediateState === 'incorrect' ? 'font-bold not-italic text-orange-300' : ''}`}
+            className={`text-xl mb-6 max-w-xl mx-auto h-24 italic transition-colors duration-300 ${
+              intermediateState === 'correct'
+                ? 'font-bold not-italic text-green-500'
+                : intermediateState === 'incorrect'
+                  ? 'font-bold not-italic text-orange-400'
+                  : ''
+            }`}
           >
             {intermediateState
               ? intermediateState === 'correct'
@@ -85,7 +91,11 @@ export default function WhoSaidIt() {
               <button
                 key={index}
                 onClick={() => handleAnswer(index)}
-                className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800 w-64"
+                className={`px-6 py-3 rounded-lg transition-colors duration-400 ${
+                  intermediateState
+                    ? `${intermediateState === 'correct' ? 'bg-gray-400' : 'bg-orange-600'} cursor-not-allowed`
+                    : 'bg-purple-700 active:bg-purple-800 hover:bg-purple-800'
+                } w-64`}
                 disabled={!!intermediateState}
               >
                 {option}
@@ -100,32 +110,34 @@ export default function WhoSaidIt() {
         questions && (
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Game Over</h1>
-            <p className="text-xl text-left">Score: {score}</p>
-            <p className="text-xl mb-2 text-left">
+            <p className="text-xl text-left mb-2">Score: {score}</p>
+            <p className="text-xl mb-4 text-left">
               You answered {answers.length}/{questions.length} questions
             </p>
             <h2 className="text-2xl mb-4 text-left">Answers:</h2>
-            <ul className="list-disc list-inside text-left">
-              {answers.map(({ isCorrect, rawAnswer }, index) => {
-                const question = questions[index];
-                const answer = question.options[rawAnswer];
-                const correctAnswer = question.options[question.answer];
-                return (
-                  <li key={index} className="mb-2 italic">
-                    {question.quote}{' '}
-                    {isCorrect ? (
-                      <span className="text-green-500 not-italic">
-                        {answer}
-                      </span>
-                    ) : (
-                      <span className="text-orange-300 not-italic">
-                        {answer} (Correct: {correctAnswer})
-                      </span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+            <div className="bg-white text-black rounded-lg p-4 shadow-lg max-w-md mx-auto">
+              <ol className="list-decimal list-inside text-left">
+                {answers.map(({ isCorrect, rawAnswer }, index) => {
+                  const question = questions[index];
+                  const answer = question.options[rawAnswer];
+                  const correctAnswer = question.options[question.answer];
+                  return (
+                    <li key={index} className="mb-2 italic">
+                      {question.quote}{' '}
+                      {isCorrect ? (
+                        <span className="text-green-500 not-italic">
+                          {answer}
+                        </span>
+                      ) : (
+                        <span className="text-orange-400 not-italic">
+                          {answer} (Correct: {correctAnswer})
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
             <Button
               onClick={startGame}
               isLoading={currentState === 'loading-ingame'}

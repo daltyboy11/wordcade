@@ -177,7 +177,7 @@ export default function WordScramble() {
           <div className="flex justify-center mb-6 w-full flex-nowrap">
             {intermediateState ? (
               <h2
-                className={`text-2xl mb-6 font-bold ${intermediateState === 'correct' ? 'text-green-500' : 'text-orange-300'}`}
+                className={`text-2xl mb-6 font-bold transition-colors duration-300 ${intermediateState === 'correct' ? 'text-green-500' : 'text-orange-400'}`}
               >
                 {intermediateState === 'correct' ? 'Correct' : 'Incorrect'}
               </h2>
@@ -200,7 +200,11 @@ export default function WordScramble() {
               <button
                 key={index}
                 onClick={() => handleTileClick(index)}
-                className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-purple-700 rounded-lg active:bg-purple-800 flex items-center justify-center"
+                className={`w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-purple-700 rounded-lg active:bg-purple-800 flex items-center justify-center ${
+                  intermediateState
+                    ? `${intermediateState === 'correct' ? 'bg-gray-400' : 'bg-orange-600'} cursor-not-allowed`
+                    : ''
+                }`}
                 disabled={!!intermediateState}
               >
                 {intermediateState ? '' : tile}
@@ -215,30 +219,34 @@ export default function WordScramble() {
         questions && (
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Game Over</h1>
-            <p className="text-xl text-left">Score: {score}</p>
-            <p className="text-xl mb-2 text-left">
+            <p className="text-xl text-left mb-2">Score: {score}</p>
+            <p className="text-xl mb-4 text-left">
               You answered {answers.length}/{questions.length} questions
             </p>
             <h2 className="text-2xl mb-4 text-left">Answers:</h2>
-            <ul className="list-disc list-inside text-left">
-              {answers.map(({ isCorrect, rawAnswer }, index) => {
-                const { guess, scrambled } = rawAnswer;
-                const question = questions[index];
-                const correctAnswer = question.word;
-                return (
-                  <li key={index} className="mb-2 italic">
-                    {scrambled}{' '}
-                    {isCorrect ? (
-                      <span className="text-green-500 not-italic">{guess}</span>
-                    ) : (
-                      <span className="text-orange-300 not-italic">
-                        {guess} (Correct: {correctAnswer})
-                      </span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+            <div className="bg-white text-black rounded-lg p-4 shadow-lg max-w-md mx-auto">
+              <ol className="list-decimal list-inside text-left">
+                {answers.map(({ isCorrect, rawAnswer }, index) => {
+                  const { guess, scrambled } = rawAnswer;
+                  const question = questions[index];
+                  const correctAnswer = question.word;
+                  return (
+                    <li key={index} className="mb-2 italic">
+                      {scrambled}{' '}
+                      {isCorrect ? (
+                        <span className="text-green-500 not-italic">
+                          {guess}
+                        </span>
+                      ) : (
+                        <span className="text-orange-400 not-italic">
+                          {guess} (Correct: {correctAnswer})
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
             <Button
               onClick={startGame}
               isLoading={currentState === 'loading-ingame'}

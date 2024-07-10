@@ -71,7 +71,13 @@ export default function Synonyms() {
             </h1>
           </div>
           <h2
-            className={`text-2xl mb-6 ${intermediateState === 'correct' ? 'font-bold text-green-500' : intermediateState === 'incorrect' ? 'font-bold text-orange-300' : ''}`}
+            className={`text-2xl mb-6 transition-colors duration-300 ${
+              intermediateState === 'correct'
+                ? 'font-bold text-green-500'
+                : intermediateState === 'incorrect'
+                  ? 'font-bold text-orange-400'
+                  : ''
+            }`}
           >
             {intermediateState
               ? intermediateState === 'correct'
@@ -86,7 +92,11 @@ export default function Synonyms() {
               <button
                 key={index}
                 onClick={() => handleAnswer(index)}
-                className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800"
+                className={`px-6 py-3 rounded-lg transition-colors duration-400 ${
+                  intermediateState
+                    ? `${intermediateState === 'correct' ? 'bg-gray-400' : 'bg-orange-600'} cursor-not-allowed`
+                    : 'bg-purple-700 active:bg-purple-800 hover:bg-purple-800'
+                }`}
                 disabled={!!intermediateState}
               >
                 {option}
@@ -101,30 +111,32 @@ export default function Synonyms() {
         questions && (
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Game Over</h1>
-            <p className="text-xl text-left">Score: {score}</p>
-            <p className="text-xl mb-2 text-left">
+            <p className="text-xl text-left mb-2">Score: {score}</p>
+            <p className="text-xl mb-4 text-left">
               You answered {answers.length}/{questions.length} questions
             </p>
             <h2 className="text-2xl mb-4 text-left">Answers:</h2>
-            <ul className="list-disc list-inside text-left">
-              {answers.map(({ isCorrect, rawAnswer }, index) => {
-                const question = questions[index];
-                const answer = question.options[rawAnswer];
-                const correctAnswer = question.options[question.answer];
-                return (
-                  <li key={index} className="mb-2">
-                    {question.word}:{' '}
-                    {isCorrect ? (
-                      <span className="text-green-500">{answer}</span>
-                    ) : (
-                      <span className="text-orange-300">
-                        {answer} (Correct: {correctAnswer})
-                      </span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+            <div className="bg-white text-black rounded-lg p-4 shadow-lg max-w-md mx-auto">
+              <ol className="list-decimal list-inside text-left">
+                {answers.map(({ isCorrect, rawAnswer }, index) => {
+                  const question = questions[index];
+                  const answer = question.options[rawAnswer];
+                  const correctAnswer = question.options[question.answer];
+                  return (
+                    <li key={index} className="mb-2">
+                      <span className="font-bold">{question.word}:</span>{' '}
+                      {isCorrect ? (
+                        <span className="text-green-500">{answer}</span>
+                      ) : (
+                        <span className="text-orange-400">
+                          {answer} (Correct: {correctAnswer})
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
             <Button
               onClick={startGame}
               isLoading={currentState === 'loading-ingame'}

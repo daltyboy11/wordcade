@@ -70,7 +70,13 @@ export default function FakeWords() {
             </h1>
           </div>
           <h2
-            className={`text-2xl mb-6 ${intermediateState === 'correct' ? 'font-bold text-green-500' : intermediateState === 'incorrect' ? 'font-bold text-orange-300' : ''}`}
+            className={`text-2xl mb-6 transition-colors duration-300 ${
+              intermediateState === 'correct'
+                ? 'font-bold text-green-500'
+                : intermediateState === 'incorrect'
+                  ? 'font-bold text-orange-400'
+                  : ''
+            }`}
           >
             {intermediateState
               ? intermediateState === 'correct'
@@ -88,14 +94,22 @@ export default function FakeWords() {
           <div className="flex justify-center gap-4">
             <button
               onClick={() => handleAnswer(true)}
-              className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800 w-32"
+              className={`px-6 py-3 rounded-lg transition-colors duration-400 ${
+                intermediateState
+                  ? `${intermediateState === 'correct' ? 'bg-gray-400' : 'bg-orange-600'} cursor-not-allowed`
+                  : 'bg-purple-700 active:bg-purple-800 hover:bg-purple-800'
+              }`}
               disabled={!!intermediateState}
             >
               Real
             </button>
             <button
               onClick={() => handleAnswer(false)}
-              className="px-6 py-3 bg-purple-700 rounded-lg active:bg-purple-800 w-32"
+              className={`px-6 py-3 rounded-lg transition-colors duration-400 ${
+                intermediateState
+                  ? `${intermediateState === 'correct' ? 'bg-gray-400' : 'bg-orange-600'} cursor-not-allowed`
+                  : 'bg-purple-700 active:bg-purple-800 hover:bg-purple-800'
+              }`}
               disabled={!!intermediateState}
             >
               Fake
@@ -109,31 +123,33 @@ export default function FakeWords() {
         questions && (
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Game Over</h1>
-            <p className="text-xl text-left">Score: {score}</p>
-            <p className="text-xl mb-2 text-left">
+            <p className="text-xl text-left mb-2">Score: {score}</p>
+            <p className="text-xl mb-4 text-left">
               You answered {answers.length}/{questions.length} questions
             </p>
             <h2 className="text-2xl mb-4 text-left">Answers:</h2>
-            <ul className="list-disc list-inside text-left">
-              {answers.map(({ isCorrect, rawAnswer }, index) => {
-                const question = questions[index];
-                return (
-                  <li key={index} className="mb-2">
-                    {question.word}:{' '}
-                    {isCorrect ? (
-                      <span className="text-green-500">
-                        {question.real ? 'Real' : 'Fake'}
-                      </span>
-                    ) : (
-                      <span className="text-orange-300">
-                        {rawAnswer ? 'Real' : 'Fake'} (Correct:{' '}
-                        {question.real ? 'Real' : 'Fake'})
-                      </span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+            <div className="bg-white text-black rounded-lg p-4 shadow-lg max-w-md mx-auto">
+              <ol className="list-decimal list-inside text-left">
+                {answers.map(({ isCorrect, rawAnswer }, index) => {
+                  const question = questions[index];
+                  return (
+                    <li key={index} className="mb-2">
+                      <span className="font-bold">{question.word}:</span>{' '}
+                      {isCorrect ? (
+                        <span className="text-green-500">
+                          {question.real ? 'Real' : 'Fake'}
+                        </span>
+                      ) : (
+                        <span className="text-orange-400">
+                          {rawAnswer ? 'Real' : 'Fake'} (Correct:{' '}
+                          {question.real ? 'Real' : 'Fake'})
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
             <Button
               onClick={startGame}
               isLoading={currentState === 'loading-ingame'}
