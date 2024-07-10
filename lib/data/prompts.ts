@@ -65,7 +65,7 @@ Your goals
 `;
 
 export const analogiesPrompt = `
-Generate an array of 10 questions for the analogies game. Your response should be a valid JSON array, and nothing else.
+Generate an array of 8 questions for the analogies game. Your response should be a valid JSON array, and nothing else.
 Elements in the array conform to this schema 
 \`\`\`
 {
@@ -97,17 +97,14 @@ An example:
       {
         "optionText": "Chef => Knife",
         "isCorrect": false
-      },
-      {
-        "optionText": "Teacher => Blackboard",
-        "isCorrect": false
       }
     ],
     "explanation": "The relationship between 'Artist' and 'Paintbrush' is that a paintbrush is a tool used by an artist to create art. Similarly, a 'Pen' is a tool used by a 'Writer' to create written works. Both pairs share a user-to-tool relationship."
 }
 \`\`\`
 
-The correct option should obviously fit the relationship, and the incorrect options should not. Don't make the choices ambiguous.
+Make sure there is only one right answer. One should not be able to argue convincingly that the incorrect options could fit the relationship.
+Also do not return data where the right answer is always the first option. You tend to do this if I don't specify otherwise...
 
 Avoid recycling words that you used in previous prompts for this minigame. Your goal is to make every game unique, fun, and interesting.
 `;
